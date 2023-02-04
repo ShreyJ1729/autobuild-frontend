@@ -123,7 +123,7 @@ def query_embeddings(query, output_tokens=100):
 if __name__ == "__main__":
     if not os.path.exists("embeddings.json"):
         print("Processing text into embeddings...")
-        process_text_into_embeddings("ch1.txt", chunksize=2048)
+        process_text_into_embeddings("../data/ch1.txt", chunksize=2048)
     else:
         print("Embeddings found. Skipping...")
 
