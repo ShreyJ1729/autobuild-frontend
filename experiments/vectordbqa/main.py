@@ -8,15 +8,13 @@ from langchain import OpenAI, VectorDBQA
 dotenv.load_dotenv("../../.env")
 # print(os.environ.get("OPENAI_API_KEY"))
 
-filename = "straussian_moment.txt"
-
 
 def load_text(filename) -> str:
     print("Loading data...")
     return open(f"../data/{filename}").read()
 
 
-def build_index(file_text) -> FAISS:
+def build_index(file_text, save_path) -> FAISS:
     print("Splitting text...")
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     texts = text_splitter.split_text(file_text)
@@ -39,13 +37,13 @@ def build_or_load_index(file_text, save_path) -> FAISS:
     if os.path.exists(save_path):
         return load_index(save_path)
     else:
-        build_index(file_text)
+        build_index(file_text, save_path)
         return load_index(save_path)
 
 
 if __name__ == "__main__":
-    filename = "straussian_moment.txt"
-    save_path = f"{filename.split('.')[0]}.pkl"
+    filename = "resume.txt"
+    save_path = filename.split(".")[0]
 
     file_text = load_text(filename)
     docsearch = build_or_load_index(file_text, save_path)
@@ -56,8 +54,8 @@ if __name__ == "__main__":
     )
 
     print(f"Ready to answer questions about {filename}! (Ctrl+C to exit)")
-    print("Example Query: Summarize the document.")
-    print(qa.run("Summarize the document."))
+    # print("Example Query: Summarize the document.")
+    # print(qa.run("Summarize the document."))
 
     while True:
         query = input("Query: ")
