@@ -6,7 +6,7 @@ from tqdm import tqdm
 from openai.embeddings_utils import cosine_similarity, get_embedding
 
 # load environment variables
-config = dotenv.dotenv_values("../.env")
+config = dotenv.dotenv_values("../../.env")
 openai.api_key = config["OPENAI_API_KEY"]
 
 print(config)
@@ -123,7 +123,7 @@ def query_embeddings(query, output_tokens=100):
 if __name__ == "__main__":
     if not os.path.exists("embeddings.json"):
         print("Processing text into embeddings...")
-        process_text_into_embeddings("../data/ch1.txt", chunksize=2048)
+        process_text_into_embeddings("../data/harry-potter.txt", chunksize=2048)
     else:
         print("Embeddings found. Skipping...")
 

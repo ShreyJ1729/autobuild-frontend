@@ -42,7 +42,7 @@ def build_or_load_index(file_text, save_path) -> FAISS:
 
 
 if __name__ == "__main__":
-    filename = "resume.txt"
+    filename = "harry-potter.txt"
     save_path = filename.split(".")[0]
 
     file_text = load_text(filename)
