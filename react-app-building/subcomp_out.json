@@ -1,0 +1,5 @@
+{
+    "subcomponent": "Input",
+    "summary": "Allows users to input new messages into the chatbox",
+    "position": "Below the chatbox messages"
+}

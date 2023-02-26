@@ -1,0 +1,1 @@
+Build a React Input Component that Allows users to input new messages into the chatbox, is positioned below the chatbox messages, and is the child of a Chatbox component that Container for displaying messages and inputting new messages

@@ -16,8 +16,10 @@ def load_text(filename) -> str:
 
 def build_index(file_text, save_path) -> FAISS:
     print("Splitting text...")
-    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=0)
     texts = text_splitter.split_text(file_text)
+
+    print(len(texts), "chunks of text")
 
     print("Building index...")
     docsearch = FAISS.from_texts(texts, OpenAIEmbeddings())
@@ -33,16 +35,16 @@ def load_index(save_path) -> FAISS:
     return docsearch
 
 
+# make a function to build or load index based on whether it exists
 def build_or_load_index(file_text, save_path) -> FAISS:
     if os.path.exists(save_path):
         return load_index(save_path)
     else:
-        build_index(file_text, save_path)
-        return load_index(save_path)
+        return build_index(file_text, save_path)
 
 
 if __name__ == "__main__":
-    filename = "harry-potter.txt"
+    filename = "attention-paper.txt"
     save_path = filename.split(".")[0]
 
     file_text = load_text(filename)

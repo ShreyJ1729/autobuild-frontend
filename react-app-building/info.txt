@@ -1,0 +1,37 @@
+
+# # code that takes a json of the form:
+# # [{
+# # "component": <category>,
+# # "subcomponents": <list of subcategories>
+# # }, ...]
+# # and creates jsx files and folders for each component and subcomponent
+
+# import json
+# import os
+
+
+# def create_file_structure(json_file):
+#     with open(json_file) as f:
+#         data = json.load(f)
+
+#     for component in data:
+#         # create the folder for the component
+#         os.mkdir(component["component"])
+#         # create jsx files for each subcomponent inside the component folder
+#         for subcomponent in component["subcomponents"]:
+#             with open(
+#                 os.path.join(component["component"], subcomponent + ".jsx"), "w"
+#             ) as f:
+#                 f.write("import React from 'react';\n\n")
+#                 f.write("const " + subcomponent + " = () => {\n")
+#                 f.write("\treturn (\n")
+#                 f.write("\t\t<div>\n")
+#                 f.write("\t\t\t<h1>" + subcomponent + "</h1>\n")
+#                 f.write("\t\t</div>\n")
+#                 f.write("\t);\n")
+#                 f.write("};\n\n")
+#                 f.write("export default " + subcomponent + ";\n")
+
+
+# if __name__ == "__main__":
+#     create_file_structure("components.json")

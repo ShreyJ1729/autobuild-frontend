@@ -1,0 +1,22 @@
+[
+  {
+    "component": "Chatroom",
+    "subcomponents": ["Input", "Messages", "Sidebar", "Button", "Avatar"]
+  },
+  {
+    "component": "Input",
+    "subcomponents": ["Field", "Send", "Options", "Emoji", "Attachment"]
+  },
+  {
+    "component": "Messages",
+    "subcomponents": ["User", "Content", "Timestamp", "Reactions", "Attachment"]
+  },
+  {
+    "component": "Sidebar",
+    "subcomponents": ["Users", "Search", "Settings", "Notifications", "Profile"]
+  },
+  {
+    "component": "Avatar",
+    "subcomponents": ["Image", "Text", "Icon", "Label", "Badge"]
+  }
+]
