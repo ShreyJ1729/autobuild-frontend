@@ -1,0 +1,47 @@
+
+[{
+    "name": "Chat App",
+    "summary": "A single-room chat app using websockets",
+    "childComponents": [
+        {
+            "name": "Chat Room",
+            "summary": "A single chat room for users to communicate in",
+            "childComponents": [
+                {
+                    "name": "Message List",
+                    "summary": "A list of messages sent by users in the chat room",
+                    "childComponents": [
+                        {
+                            "name": "Message",
+                            "summary": "A single message sent by a user in the chat room",
+                            "childComponents": [
+                                {
+                                    "name": "Message Text",
+                                    "summary": "The text of the message sent by a user in the chat room"
+                                },
+                                {
+                                    "name": "Message Timestamp",
+                                    "summary": "The timestamp of when the message was sent by a user in the chat room"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Message Input",
+                    "summary": "A text input for users to type messages in the chat room",
+                    "childComponents": [
+                        {
+                            "name": "Input Field",
+                            "summary": "A text field for users to type messages in the chat room"
+                        },
+                        {
+                            "name": "Send Button",
+                            "summary": "A button for users to send their messages in the chat room"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}]
