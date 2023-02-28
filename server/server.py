@@ -2,7 +2,7 @@
 # Main script handling instantiation and creation of webserver and functionality
 
 import src.app as App
-import src.routing as Router
+import src.apirouting as APIRouter
 
 def create_server() -> None:
     """
@@ -11,7 +11,7 @@ def create_server() -> None:
     App.create_app()
     print("Initialized app")
 
-    Router.create_routes()
+    APIRouter.create_routes()
     print("Created routes")
 
     print("Running app")

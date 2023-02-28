@@ -2,7 +2,8 @@
 # Module handling routing of requests from Flask app
 
 from typing import Dict
-from flask import current_app as app
+from flask import request, current_app as app
+
 
 def _default_index() -> str:
     """
@@ -10,16 +11,30 @@ def _default_index() -> str:
     """
     return "Hi"
 
+
 def _name_page(name: str) -> str:
     """
     Name page
     """
     return f"Hi, {name}. Welcome to this website!"
 
+
+def _post_message() -> str: # /api/post/message
+    """
+    Post message
+    """
+    body: dict = request.json
+    msg_type: str = body['type']
+    message: str = body['message']
+
+    return f"Type: {msg_type}, Message: {message}"
+
+
 routes: dict = {
     "/api/get": [_default_index, 'POST'],
     "/api/get2": [_name_page, 'GET'],
 }
+
 
 def create_routes():
     """
