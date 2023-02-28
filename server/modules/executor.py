@@ -2,16 +2,19 @@ import subprocess
 
 class Executor:
 
-    
-    def execute(self, command):
+    @staticmethod
+    def execute(command: str) -> tuple:
         """
         Executes a command and returns the output and error
         @param command: The command to execute
+        @return output, error: The output and error of the command
         """
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, error = process.communicate()
-        
         return output, error
 
-    def __init__(self):
-        print("Initialized")
+
+if __name__ == "__main__":
+    output, error = Executor.execute("ls")
+    print(output)
+    print(error)
