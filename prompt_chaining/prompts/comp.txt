@@ -1,0 +1,16 @@
+INSTRUCTIONS:
+Given an idea for a React web app, give all all of the React components needed to build the user interface. Make sure to include every subcomponent mentioned.
+Do not include App as a component.
+
+INPUT:
+Idea: {{IDEA}}
+
+OUTPUT:
+Encode as JSON, Use this format:
+[{
+    "name": <single-word high level component name>,
+    "summary": <summary of high level component functionality>,
+    "children": <list of child components>
+}, ...]
+
+Begin here:
