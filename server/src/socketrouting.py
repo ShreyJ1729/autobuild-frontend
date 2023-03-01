@@ -1,12 +1,14 @@
-from src.app import socketio
+#!/usr/bin/env python
+# Module handling routing of socket requests from Flask app
+
+from src.app import App
 from flask_socketio import send, emit
 
-@socketio.on('message')
-def handle_message(data):
-    print(f'received message: {data}')
-    send(data)
-
-@socketio.on('json')
-def handle_json(json):
-    print(f'received json: {str(json)}')
-    send(json, json=True)
+def create_routes() -> None:
+    """
+    Create URL rules for websockets
+    """
+    @App.socketio.on('message', namespace='/api/socket')
+    def handle_message(message) -> None:
+        send(message, namespace='/api/socket')
+        print(f'received namespace message: {message}')
