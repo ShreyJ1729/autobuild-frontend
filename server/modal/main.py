@@ -12,27 +12,23 @@ stub = modal.Stub("autobuild", image=image)
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "AutoBuild Backend"}
-
-
-class MermaidGenRequest(BaseModel):
-    description: str
-
-
 def load_openai_key():
     dotenv.load_dotenv("./.env")
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def build_mermaid_gen_prompt(description):
-    prompt = open("/root/prompts/mermaid_gen.txt", "r").read()
+@app.get("/")
+async def root():
+    return {"message": "AutoBuild Backend"}
+
+
+def build_prompt(description, prompt_path, prompt_instructions):
+    prompt = open(prompt_path, "r").read()
     prompt = prompt.replace("{{INPUT}}", description)
     return [
         {
             "role": "user",
-            "content": "You are a helpful markdown generation bot for mermaid diagrams. You help architect mermaid diagrams for React web apps in markdown from a description.",
+            "content": prompt_instructions,
         },
         {
             "role": "assistant",
@@ -42,12 +38,44 @@ def build_mermaid_gen_prompt(description):
     ]
 
 
+class MermaidGenRequest(BaseModel):
+    description: str
+
+
 @app.post("/mermaid-gen")
 async def mermaid_gen(data: MermaidGenRequest):
     print("mermaid-gen request received: ", data.description)
 
     load_openai_key()
-    messageList = build_mermaid_gen_prompt(data.description)
+    messageList = build_prompt(
+        data.description,
+        "/root/prompts/mermaid_gen.txt",
+        "You are a helpful markdown generation bot for mermaid diagrams that architects mermaid diagrams for React web apps in markdown from a text description.",
+    )
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=messageList
+    )
+
+    print(completion.choices[0].message.content)
+    return {"code": completion.choices[0].message.content}
+
+
+class MermaidEditRequest(BaseModel):
+    code: str
+    query: str
+
+
+@app.post("/mermaid-edit")
+async def mermaid_edit(data: MermaidEditRequest):
+    print("mermaid-edit request received: ", data.code, "\n", data.query)
+
+    load_openai_key()
+    messageList = build_prompt(
+        data.query,
+        "/root/prompts/mermaid_edit.txt",
+        "You are a helpful markdown generation bot for mermaid diagrams. Given a markdown mermaid diagram and a query, you generate a new markdown mermaid diagram that satisfies the query.",
+    )
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=messageList
