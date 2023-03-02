@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # Main script handling instantiation and creation of webserver and functionality
 
-import src.app as App
-import src.routing as Router
+import src.apirouting as APIRouter
+import src.socketrouting as SocketRouter
+from src.app import App
 
 def create_server() -> None:
     """
@@ -11,10 +12,11 @@ def create_server() -> None:
     App.create_app()
     print("Initialized app")
 
-    Router.create_routes()
+    APIRouter.create_routes()
+    SocketRouter.create_routes()
     print("Created routes")
 
-    print("Running app")
+    print("Running webserver")
     App.run_app(True)
         
 

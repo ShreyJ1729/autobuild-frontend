@@ -1,7 +1,0 @@
-/*
-This file contains the {{COMPONENT_NAME}} component code for {{IDEA}}
-{{COMPONENT_NAME}} is {{COMPONENT_DESCRIPTION}}
-Component children: {{COMPONENT_CHILDREN}}
-
-Only UI for now, using functional components and tailwind
-*/

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Module handling execution of any command line commands
+
 import subprocess
 
 class Executor:

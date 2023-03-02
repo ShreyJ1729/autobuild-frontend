@@ -21,6 +21,10 @@ def run_prompt(messageList):
 
 load_openai_key()
 
+# read in data from ./prompt.txt to use as prompt
+with open("./prompts/mermaid_editor.txt", "r") as f:
+    prompt = f.read()
+
 messageList = [
     {
         "role": "user",
@@ -30,16 +34,7 @@ messageList = [
         "role": "assistant",
         "content": "Got it!",
     },
+    {"role": "user", "content": prompt},
 ]
 
-
-while True:
-    prompt = input("Prompt: ")
-    messageList.append(
-        {
-            "role": "user",
-            "content": prompt,
-        }
-    )
-    response = run_prompt(messageList)
-    print(response)
+print(run_prompt(messageList))

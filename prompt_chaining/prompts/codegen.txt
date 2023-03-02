@@ -1,0 +1,10 @@
+Generate a that file contains Typescript code for the {{COMPONENT_NAME}} component for {{IDEA}}
+{{COMPONENT_NAME}} is {{COMPONENT_SUMMARY}} and has the props {{COMPONENT_PROPS}}
+
+Use the children components: {{COMPONENT_CHILDREN}} which are in the same directory as {{COMPONENT_NAME}}
+All components are functional components and use tailwind css
+All exports are default exports
+
+Use a {{DESIGN_TYPE}} UI Design
+
+Begin Here:

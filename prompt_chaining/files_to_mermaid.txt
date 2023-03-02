@@ -1,0 +1,53 @@
+Given the following react app file structure and file details, create a mermaid diagram in markdown showing the import structure.
+
+- A file is imported into another file if it is required in the code of the other file.
+
+EXAMPLE:
+
+INPUT:
+Idea: a collaborative note taking app
+- App.js
+- index.js
+- components/
+  - Header.js
+  - NoteList.js
+  - Note.js
+  - NoteForm.js
+  - User.js
+- services/
+  - api.js
+  - auth.js
+- utils/
+  - formatDate.js
+  - localStorage.js
+
+OUTPUT:
+graph TD;
+index.js-->App.js;
+App.js-->Header.js;
+App.js-->NoteList.js;
+App.js-->NoteForm.js;
+NoteList.js-->Note.js;
+NoteForm.js-->User.js;
+App.js-->api.js;
+App.js-->auth.js;
+Note.js-->formatDate.js;
+LocalStorage.js-->NoteForm.js;
+
+INPUT:
+Idea: a single-page chat app using websockets
+- App.js
+- index.js
+- components/
+  - Chat.js
+  - MessageList.js
+  - Message.js
+  - UserList.js
+  - User.js
+  - InputBox.js
+- services/
+  - websocket.js
+- utils/
+  - formatDate.js
+
+OUTPUT:

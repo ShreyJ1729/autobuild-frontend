@@ -1,7 +1,9 @@
+#!/usr/bin/env python
+# Module serving as wrapper for OpenAI API
+
 import openai
 import os
 import dotenv
-import json
 
 dotenv.load_dotenv("../.env")
 openai.api_key: str = os.getenv("OPENAI_API_KEY")
