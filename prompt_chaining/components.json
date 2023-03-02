@@ -1,0 +1,28 @@
+
+
+{
+    "name": "App",
+    "summary": "The main component that connects to the chat server",
+    "children": [
+        {
+            "name": "ChatBox",
+            "summary": "The container for the chat messages",
+            "children": [
+                {
+                    "name": "ChatMessage",
+                    "summary": "A single chat message",
+                    "children": [],
+                    "props": ["username:string", "message:string"]
+                }
+            ],
+            "props": []
+        },
+        {
+            "name": "ChatInput",
+            "summary": "The input field for chat messages",
+            "children": [],
+            "props": ["sendMessage:func"]
+        }
+    ],
+    "props": []
+}
