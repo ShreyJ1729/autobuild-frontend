@@ -13,6 +13,7 @@ import About from './pages/About';
 import Pricing from './pages/Pricing';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import LandingPage2 from './pages/LandingPage2';
 
 // 1. import `ChakraProvider` component
 import { Button, ChakraProvider } from "@chakra-ui/react";
@@ -25,7 +26,7 @@ function App() {
 
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LandingPage/>}/>
+                <Route path="/" element={<LandingPage2/>}/>
                 <Route path="/app" element={<MainPage/>}/>
                 <Route path="/about" element={<About/>}/>
                 <Route path="/pricing" element={<Pricing/>}/>
