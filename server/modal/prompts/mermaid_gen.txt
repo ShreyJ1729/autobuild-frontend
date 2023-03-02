@@ -1,8 +1,5 @@
-<<|OUTPUT|>> count = 3
-
-<<|INPUT|>>
+<<|DESCRIPTION|>>
 A single-room chat app that allows users to send messages to other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
-
 <<|OUTPUT|>>
 graph TD;
 %% UI components
@@ -48,8 +45,8 @@ ChatBody --> |reads|messagesAtom
 %% UI component props connections
 ChatHeader -.-> |props|ChatHeaderProps
 ChatMessage -.-> |props|ChatMessageProps
-
-<<|INPUT|>>
+<<|END|>>
+<<|DESCRIPTION|>>
 A simple local note-taking app that allows users to create and delete notes consisting of a title, content, and timestamp. Recoil is used for state management. No networking or database is used.
 
 <<|OUTPUT|>>
@@ -93,10 +90,9 @@ NoteItem --> |sends ID to deleteNote|NoteForm-deleteAllNotes
 %% UI component props connections
 NoteItem -.-> |props|NoteItemProps
 NoteForm -.-> |props|NoteFormProps
-
-<<|INPUT|>>
+<<|END|>>
+<<|DESCRIPTION|>>
 A collaborative whiteboard app that allows users to draw on a canvas and share their drawings with other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
-
 <<|OUTPUT|>>
 graph TD;
 
@@ -134,8 +130,7 @@ Canvas --> |reads and writes to|linesAtom
 
 %% UI component props connections
 Canvas -.-> |props|CanvasProps
-
-<<|INPUT|>>
-{{INPUT}}
-
+<<|END|>>
+<<|DESCRIPTION|>>
+{{DESCRIPTION}}
 <<|OUTPUT|>>

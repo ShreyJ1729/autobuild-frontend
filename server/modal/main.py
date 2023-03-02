@@ -1,10 +1,11 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from pydantic import BaseModel
 import modal
-from datetime import datetime
 import openai
 import dotenv
+
+app = FastAPI()
 
 image = modal.Image.debian_slim().pip_install_from_requirements("requirements.txt")
 
@@ -22,9 +23,14 @@ async def root():
     return {"message": "AutoBuild Backend"}
 
 
-def build_prompt(description, prompt_path, prompt_instructions):
+def build_prompt(variables, prompt_path, prompt_instructions):
     prompt = open(prompt_path, "r").read()
-    prompt = prompt.replace("{{INPUT}}", description)
+
+    # replace variables in prompt
+    for key in variables:
+        prompt = prompt.replace(f"{{{{{key}}}}}", variables[key])
+
+    # build and return messageList
     return [
         {
             "role": "user",
@@ -43,46 +49,56 @@ class MermaidGenRequest(BaseModel):
 
 
 @app.post("/mermaid-gen")
-async def mermaid_gen(data: MermaidGenRequest):
+async def mermaid_gen(data: MermaidGenRequest, response: Response):
     print("mermaid-gen request received: ", data.description)
 
     load_openai_key()
     messageList = build_prompt(
-        data.description,
-        "/root/prompts/mermaid_gen.txt",
-        "You are a helpful markdown generation bot for mermaid diagrams that architects mermaid diagrams for React web apps in markdown from a text description.",
+        variables={
+            "DESCRIPTION": data.description,
+        },
+        prompt_path="/root/prompts/mermaid_gen.txt",
+        prompt_instructions="You are a helpful markdown generation bot for mermaid diagrams that architects mermaid diagrams for React web apps in markdown from a text description. Stop token: <<|END|>>",
     )
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=messageList
     )
 
-    print(completion.choices[0].message.content)
-    return {"code": completion.choices[0].message.content}
+    mermaid = completion.choices[0].message.content.rstrip("<<|END|>>")
+
+    print(mermaid)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return {"mermaid": mermaid}
 
 
 class MermaidEditRequest(BaseModel):
-    code: str
+    mermaid: str
     query: str
 
 
 @app.post("/mermaid-edit")
 async def mermaid_edit(data: MermaidEditRequest):
-    print("mermaid-edit request received: ", data.code, "\n", data.query)
+    print("mermaid-edit request received: ", data.mermaid, "\n", data.query)
 
     load_openai_key()
     messageList = build_prompt(
-        data.query,
-        "/root/prompts/mermaid_edit.txt",
-        "You are a helpful markdown generation bot for mermaid diagrams. Given a markdown mermaid diagram and a query, you generate a new markdown mermaid diagram that satisfies the query.",
+        variables={
+            "MERMAID": data.mermaid,
+            "QUERY": data.query,
+        },
+        prompt_path="/root/prompts/mermaid_edit.txt",
+        prompt_instructions="You are a helpful markdown generation bot for mermaid diagrams that takes in a markdown mermaid diagram and a query and returns a new mermaid diagram with edits. Stop token: <<|END|>>",
     )
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=messageList
     )
 
-    print(completion.choices[0].message.content)
-    return {"code": completion.choices[0].message.content}
+    mermaid = completion.choices[0].message.content.rstrip("<<|END|>>")
+
+    print(mermaid)
+    return {"mermaid": mermaid}
 
 
 @stub.asgi(mounts=[modal.Mount.from_local_dir("./", remote_path="/root/")])
