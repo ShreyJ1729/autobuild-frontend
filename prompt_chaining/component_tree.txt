@@ -1,0 +1,5 @@
+App: The main component that connects to the chat server
+>ChatBox: The container for the chat messages
+>>ChatMessage: A single chat message
+>ChatInput: The input field for chat messages
+

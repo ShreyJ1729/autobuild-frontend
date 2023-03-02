@@ -1,15 +1,15 @@
-import * as React from "react";
-import { RecoilRoot } from "recoil";
-
-// 1. import `ChakraProvider` component
+import logo from "./logo.svg";
+import "./App.css";
+import ChakraUIPage from "./ChakraUIPage";
 import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
-  // 2. Wrap ChakraProvider at the root of your app
   return (
-    <RecoilRoot>
-      <ChakraProvider></ChakraProvider>
-    </RecoilRoot>
+    <div className="App">
+      <ChakraProvider>
+        <ChakraUIPage />
+      </ChakraProvider>
+    </div>
   );
 }
 
