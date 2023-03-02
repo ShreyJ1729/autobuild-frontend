@@ -10,5 +10,6 @@ def create_routes() -> None:
     """
     @App.socketio.on('message', namespace='/api/socket')
     def handle_message(message) -> None:
+        
         send(message, namespace='/api/socket')
         print(f'received namespace message: {message}')
