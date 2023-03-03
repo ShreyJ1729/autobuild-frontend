@@ -1,17 +1,17 @@
-<<|OUTPUT|>> count = 3
+<<|OUTPUT|>> count = 4
 
 <<|INPUT|>>
-A single-room chat app that allows users to send messages to other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
+A frontend application built using React in Typescript that is a single-room chat app that allows users to send messages to other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
 
 <<|OUTPUT|>>
 graph TD;
 %% UI components
-App["App.js"]
-ChatWindow["ChatWindow.js"]
-ChatHeader["ChatHeader.js"]
-ChatBody["ChatBody.js"]
-ChatInput["ChatInput.js"]
-ChatMessage["ChatMessage.js"]
+App["App.ts"]
+ChatWindow["ChatWindow.ts"]
+ChatHeader["ChatHeader.ts"]
+ChatBody["ChatBody.ts"]
+ChatInput["ChatInput.ts"]
+ChatMessage["ChatMessage.ts"]
 
 %% UI component connections
 App --> |renders|ChatWindow
@@ -31,12 +31,12 @@ ChatInput-sendMessage["sendMessage"]
 ChatInput --> |calls|ChatInput-sendMessage
 
 %% utils/socket.io
-utils/socket.io[utils/socket.io.js]
+utils/socket.io[utils/socket.io.ts]
 socket["socket.io-client"]
 utils/socket.io -.-> |socket|socket
 
 %% utils/recoil
-utils/recoil[utils/recoil.js]
+utils/recoil[utils/recoil.ts]
 messagesAtom["[{id:string,\nauthor:string,\ntext:string,\ntimestamp:string},...]"]
 utils/recoil -.-> |messagesAtom|messagesAtom
 
@@ -50,59 +50,97 @@ ChatHeader -.-> |props|ChatHeaderProps
 ChatMessage -.-> |props|ChatMessageProps
 
 <<|INPUT|>>
-A simple local note-taking app that allows users to create and delete notes consisting of a title, content, and timestamp. Recoil is used for state management. No networking or database is used.
+A frontend application built using React in Typescript that allows users to create, edit, and delete notes. The app includes several components, such as a header, a note list, a note view, and a note form, as well as utility functions for managing notes using localStorage and a RESTful API. Users can add new notes, search for notes, view and edit existing notes, and delete notes they no longer need.
 
 <<|OUTPUT|>>
 graph TD;
-
 %% UI components
 App["App.js"]
+Header["Header.js"]
 NoteList["NoteList.js"]
-NoteItem["NoteItem.js"]
+NoteListItem["NoteListItem.js"]
+NoteView["NoteView.js"]
 NoteForm["NoteForm.js"]
 
 %% UI component connections
+App --> |renders|Header
 App --> |renders|NoteList
-NoteList --> |iteratively renders|NoteItem
-NoteList --> |renders|NoteForm
+NoteList --> |iteratively renders|NoteListItem
+App --> |renders|NoteView
+NoteView --> |renders|NoteForm
 
 %% UI component props
-NoteItemProps["title:string,\ncontent:string,\ntimestamp:string"]
-NoteFormProps["addNote:function,\ndeleteAllNotes:function"]
+HeaderProps["addNote:function,\nsearchNotes:function"]
+NoteListProps["notes:array,\nselectedNoteId:string,\nselectNote:function"]
+NoteListItemProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\nisSelected:boolean,\nselectNote:function"]
+NoteViewProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\neditNote:function,\ndeleteNote:function"]
+NoteFormProps["noteId:string,\ntitle:string,\ncontent:string,\nsaveNote:function"]
 
 %% UI component function definitions
-NoteForm-addNote["addNote"]
-NoteForm-deleteAllNotes["deleteAllNotes"]
+Header-addNote["addNote"]
+Header-searchNotes["searchNotes"]
+NoteList-selectNote["selectNote"]
+NoteView-editNote["editNote"]
+NoteView-deleteNote["deleteNote"]
+NoteForm-saveNote["saveNote"]
 
 %% UI component function connections
-NoteForm --> |calls|NoteForm-addNote
-NoteForm --> |calls|NoteForm-deleteAllNotes
-NoteItem --> |calls deleteNote|NoteForm-deleteAllNotes
+Header --> |calls|Header-addNote
+Header --> |calls|Header-searchNotes
+NoteList --> |calls|NoteList-selectNote
+NoteView --> |calls|NoteView-editNote
+NoteView --> |calls|NoteView-deleteNote
+NoteForm --> |calls|NoteForm-saveNote
 
-%% utils/recoil
-utils/recoil[utils/recoil.js]
-notesAtom["[{id:string,\ntitle:string,\ncontent:string,\ntimestamp:string},...]"]
-utils/recoil -.-> |notesAtom|notesAtom
+%% utils/localStorage
+utils/localStorage[utils/localStorage.js]
+notesKey["notes"]
+utils/localStorage -.-> |localStorage|localStorage
 
-%% recoil function connections
-NoteForm-addNote --> |updates notes|notesAtom
-NoteForm-deleteAllNotes --> |updates notes|notesAtom
-NoteList --> |reads|notesAtom
-NoteItem --> |sends ID to deleteNote|NoteForm-deleteAllNotes
+%% utils/markdown
+utils/markdown[utils/markdown.js]
+convertMarkdown["convertMarkdown"]
+utils/markdown -.-> |markdown|marked
+
+%% utils/api
+utils/api[utils/api.js]
+getAllNotes["getAllNotes"]
+getNoteById["getNoteById"]
+createNote["createNote"]
+updateNote["updateNote"]
+deleteNote["deleteNote"]
+utils/api -.-> |axios|axios
+
+%% utils/api function connections
+getAllNotes --> |fetches notes from|utils/api
+getNoteById --> |fetches note from|utils/api
+createNote --> |creates note using|utils/api
+updateNote --> |updates note using|utils/api
+deleteNote --> |deletes note using|utils/api
+
+%% utils/localStorage function connections
+getAllNotes --> |saves notes to|utils/localStorage
+getNoteById --> |reads notes from|utils/localStorage
+createNote --> |saves notes to|utils/localStorage
+updateNote --> |saves notes to|utils/localStorage
+deleteNote --> |saves notes to|utils/localStorage
 
 %% UI component props connections
-NoteItem -.-> |props|NoteItemProps
+Header -.-> |props|HeaderProps
+NoteList -.-> |props|NoteListProps
+NoteListItem -.-> |props|NoteListItemProps
+NoteView -.-> |props|NoteViewProps
 NoteForm -.-> |props|NoteFormProps
 
 <<|INPUT|>>
-A collaborative whiteboard app that allows users to draw on a canvas and share their drawings with other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
+A frontend application built using React in Typescript that is a collaborative whiteboard app that allows users to draw on a canvas and share their drawings with other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
 
 <<|OUTPUT|>>
 graph TD;
 
 %% UI components
-App["App.js"]
-Canvas["Canvas.js"]
+App["App.ts"]
+Canvas["Canvas.ts"]
 
 %% UI component connections
 App --> |renders|Canvas
@@ -119,12 +157,12 @@ Canvas --> |calls|Canvas-setColor
 Canvas --> |calls|Canvas-setLineWidth
 
 %% utils/socket.io
-utils/socket.io[utils/socket.io.js]
+utils/socket.io[utils/socket.io.ts]
 socket["socket.io-client"]
 utils/socket.io -.-> |socket|socket
 
 %% utils/recoil
-utils/recoil[utils/recoil.js]
+utils/recoil[utils/recoil.ts]
 linesAtom["[{id:string,\npoints:[{x:number,\ny:number}],\ncolor:string,\nlineWidth:number},...]"]
 utils/recoil -.-> |linesAtom|linesAtom
 
@@ -134,8 +172,7 @@ Canvas --> |reads and writes to|linesAtom
 
 %% UI component props connections
 Canvas -.-> |props|CanvasProps
-
-<<|INPUT|>>
-{{INPUT}}
-
+<<|END|>>
+<<|DESCRIPTION|>>
+{{DESCRIPTION}}
 <<|OUTPUT|>>
