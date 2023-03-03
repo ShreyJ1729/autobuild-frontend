@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import "./ChatbotStyles.css";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { mermaidData } from "../recoil/atoms.js";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
+  const [data, setData] = useRecoilState(mermaidData);
 
   useEffect(() => {
     async function loadWelcomeMessage() {
       setMessages([
         <BotMessage
           key="0"
-          fetchMessage={async () => "HIB"}
+          fetchMessage={async () => "Hi! Enter your queries below:"}
         />
       ]);
     }
@@ -22,10 +26,29 @@ const Chatbot = () => {
       <UserMessage key={messages.length + 1} text={text} />,
       <BotMessage
         key={messages.length + 2}
-        fetchMessage={async () => "HI"}
+        fetchMessage={async () => 'Done!'}
       />
     );
     setMessages(newMessages);
+
+    // format
+    const obj = {
+        mermaid: data,
+        query: text
+    };
+  
+    axios
+    .post(
+        "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-edit",
+        obj
+    )
+    .then((res) => {
+        const mermaid_code = res.data["mermaid"];
+        setData(mermaid_code);
+    })
+    .then(() => {
+        // navigate(`/app`);
+    });
   };
 
   return (

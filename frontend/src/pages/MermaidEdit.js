@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { mermaidData } from "../recoil/atoms.js";
 import {
@@ -74,13 +74,15 @@ const App = () => {
     {/* Diagram */}
     <Preview code={data} />
     
+    <br/>
+
     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
         <GridItem w='100%' h='10' bg='black'>
             <CodeEditor
                 value={data}
                 language="js"
                 placeholder=""
-                onChange={(evn) => setCode(evn.target.value)}
+                onChange={(evn) => setData(evn.target.value)}
                 padding={15}
                 style={{
                     fontSize: 12,
