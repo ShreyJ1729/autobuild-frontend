@@ -31,11 +31,15 @@ if __name__ == "__main__":
     load_openai_key()
     description = "A frontend application built using React in Typescript that is a single-room chat app that allows users to send messages to other users on the website. Socket.io is used for real-time communication and recoil is used for state management."
     
+    # Write file input_1.txt to variable
+    with open("./inputs/input_1.txt", "r") as f:
+        mermaid_md = f.read()
+
     messageList = build_prompt(
         variables={
-            "DESCRIPTION": description,
+            "DESCRIPTION": mermaid_md,
         },
-        prompt_path="./inputs/m2c.txt",
+        prompt_path="./prompts/m2c.txt",
         prompt_instructions="""
         You are a helpful bot for converting mermaid diagrams that illustrate architecture for React web apps in markdown to tree structures and descriptions for future code generation. 
         Assume index.tsx is the React root, not a component, so make sure the index.tsx file is in the src/ folder. It should not be in a different folder. We should also make sure App.tsx is in our src/ folder like our index.tsx, not inside a src/App folder. 

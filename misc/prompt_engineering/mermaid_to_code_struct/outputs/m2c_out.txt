@@ -1,38 +1,24 @@
 React frontend app in Typescript file and folder structure:
+```
 src/
 ├── index.tsx
 ├── App.tsx
 ├── components/
-│   ├── ChatWindow/
-│   │   └── ChatWindow.tsx
-│   ├── ChatHeader/
-│   │   └── ChatHeader.tsx
-│   ├── ChatBody/
-│   │   └── ChatBody.tsx
-│   ├── ChatInput/
-│   │   └── ChatInput.tsx
-│   ├── ChatMessage/
-│   │   └── ChatMessage.tsx
-├── utils/
+│   └── Canvas/
+│       └── Canvas.tsx
+└── utils/
     ├── socket.io/
     │   └── socket.io.ts
     └── recoil/
         └── recoil.ts
+```
 
-Components and their descriptions:
-- App: The root component of the application. It renders the ChatWindow component and passes the AppProps as its props. It doesn't call any other component.
-    Props: roomName: string
-- ChatWindow: Renders the ChatHeader, ChatBody, and ChatInput components. It iteratively renders the ChatMessage component for each message in the messagesAtom. It receives the ChatWindowProps as its props.
-    Props: roomName: string
-- ChatHeader: Renders the name of the chat room. It receives the ChatHeaderProps as its props.
-    Props: roomName: string
-- ChatBody: Renders the messages in the chat room. It iteratively renders the ChatMessage component for each message in the messagesAtom.
-    Props: None
-- ChatInput: Renders the input box for sending a new message. It receives the ChatInputProps as its props and has a sendMessage function.
-    Props: sendMessage: (message: string) => void
-- ChatMessage: Renders a single message. It receives the ChatMessageProps as its props.
-    Props: author: string, text: string, timestamp: string
+Components and their descriptions for the collaborative whiteboard app:
+- App: The root component of the application. It renders the Canvas component and passes the AppProps as its props. It doesn't call any other component.
+  Props: None
+- Canvas: Renders a canvas for drawing and handles user input for drawing on the canvas. It receives the CanvasProps as its props and has a setColor and setLineWidth function for updating drawing settings.
+  Props: canvasRef: RefObject<HTMLCanvasElement>, drawingMode: boolean, setColor: (color: string) => void, setLineWidth: (lineWidth: number) => void
 
 Utils:
 - utils/socket.io: Contains the socket.io-client library for real-time communication. It exports the socket object.
-- utils/recoil: Contains the messagesAtom for state management with Recoil. It exports the messagesAtom object.
+- utils/recoil: Contains the linesAtom for state management with Recoil. It exports the linesAtom object.
