@@ -13,7 +13,7 @@ import {
 import { Textarea } from '@chakra-ui/react'
 
 import axios from 'axios';
-
+import {useState} from 'react';
 
 import {
     Flex,
@@ -35,26 +35,54 @@ import {
   } from '@chakra-ui/icons';
   import Logo from '../Logo.png';
   import { Link as RouterLink} from "react-router-dom";
+    
+    
+  import { useNavigate } from 'react-router-dom';
 
+  import {
+    RecoilRoot,
+    atom,
+    useRecoilState,
+  } from "recoil";
+
+  import { mermaiddata } from '../recoil/atom/mermaiddata';
 
 
 const LandingPage2 = () => {
 
+    const config = {
+        headers:{
+            "Access-Control-Allow-Origin": "*"
+        }
+    };
+
+    const navigate = useNavigate();
+
+
     const { isOpen, onToggle } = useDisclosure();
 
+    const [data, setData] = useRecoilState(mermaiddata);
+
+    const [input, setInput] = useState("");
+
+    console.log(input);
 
     function sendInput(e) {
         // make req to backend
         console.log("sending request");
 
-        axios.get(`https://3aeb338e-9129-4621-8bca-db55f97c7635.mock.pstmn.io/mermaid-gen`)
-        .then(res => {
-          const mermaid_code = res.data;
+        const obj = {
+            description: input
+        }
 
+        axios.post('https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-gen', obj).then(res => {
+          const mermaid_code = res.data;
+          console.log(102990123);
           console.log(mermaid_code);
+          setData(mermaid_code);
         })
 
-
+        navigate(`/app`);
     }
 
 
@@ -155,7 +183,9 @@ const LandingPage2 = () => {
             position={'relative'}>
             {/* <Input placeholder='' htmlSize={75} h="100px" width='auto' borderColor='green' /> */}
 
-            <Textarea placeholder='2-3 sentences recommended' borderColor='green' h="100px" width='500px'/>
+            <Textarea placeholder='2-3 sentences recommended' borderColor='green' h="100px" width='500px'
+                onChange={(e) => {setInput(e.target.value)}}
+            />
 
 
             <Button

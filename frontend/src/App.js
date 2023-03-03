@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, atom } from "recoil";
 import ReactDOM from "react-dom/client";
 import {
     BrowserRouter,
@@ -17,6 +17,7 @@ import LandingPage2 from './pages/LandingPage2';
 
 // 1. import `ChakraProvider` component
 import { Button, ChakraProvider } from "@chakra-ui/react";
+
 
 function App() {
   return (
