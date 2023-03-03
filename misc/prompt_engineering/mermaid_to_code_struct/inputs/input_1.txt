@@ -1,37 +1,65 @@
-A frontend application built using React in Typescript that is a collaborative whiteboard app that allows users to draw on a canvas and share their drawings with other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
+A frontend application built using React in Typescript that is an online file system. Use REST APIs for interaction and use Recoil for state management.
 graph TD;
-
 %% UI components
-App["App.ts"]
-Canvas["Canvas.ts"]
+App["App.tsx"]
+FileExplorer["FileExplorer.tsx"]
+Folder["Folder.tsx"]
+File["File.tsx"]
+ContextMenu["ContextMenu.tsx"]
+ContextMenuOption["ContextMenuOption.tsx"]
 
 %% UI component connections
-App --> |renders|Canvas
+App --> |renders|FileExplorer
+FileExplorer --> |iteratively renders|Folder
+FileExplorer --> |iteratively renders|File
+ContextMenu --> |iteratively renders|ContextMenuOption
+ContextMenu --> |hides|FileExplorer
 
 %% UI component props
-CanvasProps["canvasRef:Ref,\ndrawingMode:boolean,\nsetColor:function,\nsetLineWidth:function"]
+FolderProps["name:string"]
+FileProps["name:string,\ntype:string,\nmodified:string"]
+ContextMenuOptionProps["label:string,\naction:function"]
 
 %% UI component function definitions
-Canvas-setColor["setColor"]
-Canvas-setLineWidth["setLineWidth"]
+FileExplorer-fetchFiles["fetchFiles"]
+ContextMenu-openContextMenu["openContextMenu"]
+ContextMenu-closeContextMenu["closeContextMenu"]
+ContextMenuOption-copy["copy"]
+ContextMenuOption-delete["delete"]
 
 %% UI component function connections
-Canvas --> |calls|Canvas-setColor
-Canvas --> |calls|Canvas-setLineWidth
+FileExplorer --> |calls|FileExplorer-fetchFiles
+Folder --> |opens|ContextMenu
+File --> |opens|ContextMenu
+ContextMenu --> |calls|ContextMenu-openContextMenu
+ContextMenu --> |calls|ContextMenu-closeContextMenu
+ContextMenuOption-copy --> |calls|Folder.copyFile|
+ContextMenuOption-delete --> |calls|File.deleteFile
 
-%% utils/socket.io
-utils/socket.io[utils/socket.io.ts]
-socket["socket.io-client"]
-utils/socket.io -.-> |socket|socket
+%% utils/REST APIs
+utils/restAPI[utils/restAPI.ts]
+utils/restAPI --> |fetches files|FileExplorer-fetchFiles
+utils/restAPI --> |deletes file|File.deleteFile
+utils/restAPI --> |copies file|Folder.copyFile
 
 %% utils/recoil
 utils/recoil[utils/recoil.ts]
-linesAtom["[{id:string,\npoints:[{x:number,\ny:number}],\ncolor:string,\nlineWidth:number},...]"]
-utils/recoil -.-> |linesAtom|linesAtom
+filesAtom["[{name:string,\ntype:string,\nmodified:string},...]"]
+selectedItemAtom["{name:string,\ntype:string}"]
+contextMenuVisibleAtom["boolean"]
+utils/recoil --> |stores files|filesAtom
+utils/recoil --> |stores selected item|selectedItemAtom
+utils/recoil --> |stores context menu visibility|contextMenuVisibleAtom
 
 %% recoil function connections
-utils/socket.io --> |updates linesAtom|linesAtom
-Canvas --> |reads and writes to|linesAtom
+FileExplorer-fetchFiles --> |updates|filesAtom
+Folder.copyFile --> |updates|filesAtom
+File.deleteFile --> |updates|filesAtom
+Folder --> |reads/writes|selectedItemAtom
+File --> |reads/writes|selectedItemAtom
+ContextMenu --> |reads/writes|contextMenuVisibleAtom
 
 %% UI component props connections
-Canvas -.-> |props|CanvasProps
+Folder -.-> |props|FolderProps
+File -.-> |props|FileProps
+ContextMenuOption -.-> |props|ContextMenuOptionProps
