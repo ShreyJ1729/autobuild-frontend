@@ -25,8 +25,8 @@ import defaultMermaid from "./defaultMermaid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const App = () => {
-  const [fileData, setFileData] = useRecoilState();
+const Codegen = () => {
+  const [fileData2, setFileData] = useRecoilState(fileData);
 
   const sendFilesForDownload = () => {
 
@@ -80,4 +80,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Codegen;

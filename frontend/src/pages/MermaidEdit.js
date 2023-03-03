@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { mermaidData, fileData } from "../recoil/atoms.js";
+import { mermaidData, fileData, idea } from "../recoil/atoms.js";
 import {
   Box,
   Text,
@@ -31,10 +31,13 @@ const App = () => {
   const [code, setCode] = useState(defaultMermaid);
   const [fileData2, setFileData] = useRecoilState(fileData);
   const navigate = useNavigate(); // routing
+  const [userIdea, setIdea] = useRecoilState(idea);
 
   const sendMermaidForCodeGen = () => {
+    console.log('sending code req');
     const obj = {
       mermaid: data,
+      description: userIdea
     };
     axios.post(
       "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-to-code",
@@ -45,7 +48,7 @@ const App = () => {
         console.log(files);
         setData(files);
       }).then(() => {
-        navigate(`/`);
+        navigate(`/codegen`);
       });;
   };
 

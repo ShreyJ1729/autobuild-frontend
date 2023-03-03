@@ -10,3 +10,8 @@ export const fileData = atom({
   key: "file_data",
   default: {"path/filename": "filestr"},
 });
+
+export const idea = atom({
+    key: 'idea',
+    default: ""
+});
