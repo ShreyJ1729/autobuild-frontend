@@ -1,55 +1,48 @@
+import { IconButton } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { mermaidData } from "../recoil/atoms.js";
 import {
-    Box,
-    Text,
-    Stack,
-    useColorModeValue,
-    Flex,
-    Link,
-    Popover,
-    PopoverTrigger,
-    useBreakpointValue,
-    Grid,
-    GridItem
-  } from "@chakra-ui/react";
+  Box,
+  Text,
+  Stack,
+  useColorModeValue,
+  Flex,
+  Link,
+  Popover,
+  PopoverTrigger,
+  useBreakpointValue,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 
 import example from "./defaultMermaid";
-import CodeEditor from '@uiw/react-textarea-code-editor';
+import CodeEditor from "@uiw/react-textarea-code-editor";
 import Chatbot from "./Chatbot.js";
 import Preview from "./MermaidPreview.js";
+import defaultMermaid from "./defaultMermaid";
+import axios from "axios";
 
 const App = () => {
   const [data, setData] = useRecoilState(mermaidData);
   const [content, setContent] = useState([]);
-  const [code, setCode] = useState(`  
-    graph TD;
-    App-->|renders|ChatWindow;
-    ChatWindow-->|renders|ChatHeader;
-    ChatWindow-->|renders|ChatBody;
-    ChatWindow-->|renders|ChatInput;
-    ChatBody-->|iterativelyrenders|ChatMessage;
-    ChatHeaderProps["roomName:string"];
-    ChatMessageProps["author:string,<br/>text:string,<br/>timestamp:string"];
-    ChatInput-sendMessage["sendMessage"];
-    ChatInput-->|calls|ChatInput-sendMessage;
-    utils/socket.io[utils/socket.io.js];
-    socket["socket.io-client"];
-    utils/recoil[utils/recoil.js];
-    messagesAtom["[{id:string<br/>author:string,<br/>text:string,<br/>timestamp:string},...]"];
-    utils/recoil-.->|messagesAtom|messagesAtom;
-    utils/socket.io-.->|socket|socket;
-    utils/socket.io-->|updatesmessages|messagesAtom;
-    ChatBody-->|reads|messagesAtom;
-    ChatHeader-.->|props|ChatHeaderProps;
-    ChatMessage-.->|props|ChatMessageProps;
-  `);
+  const [code, setCode] = useState(defaultMermaid);
 
-  return <>
-    
-    {/* Header */}
-    <Flex
+  const sendMermaidForCodeGen = () => {
+    const obj = {
+      mermaid: data,
+    };
+    axios.post(
+      "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-to-code",
+      obj
+    );
+  };
+
+  return (
+    <>
+      {/* Header */}
+      <Flex
         bg={useColorModeValue("black", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
@@ -69,34 +62,41 @@ const App = () => {
             <b>AutoBuild</b>
           </Text>
         </Flex>
-    </Flex>
-
-    {/* Diagram */}
-    <Preview code={data} />
-    
-    <br/>
-
-    <Grid templateColumns='repeat(2, 1fr)' gap={6}>
-        <GridItem w='100%' h='10' bg='black'>
-            <CodeEditor
-                value={data}
-                language="js"
-                placeholder=""
-                onChange={(evn) => setData(evn.target.value)}
-                padding={15}
-                style={{
-                    fontSize: 12,
-                    backgroundColor: "#000000",
-                    fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                }}
-            />
+        <IconButton
+          icon={<ArrowForwardIcon />}
+          aria-label="Right arrow"
+          size="md"
+          colorScheme="blue"
+          onClick={() => {
+            sendMermaidForCodeGen();
+          }}
+        />
+      </Flex>
+      {/* Diagram */}
+      <Preview code={data} />
+      <br />
+      <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+        <GridItem w="100%" h="10" bg="black">
+          <CodeEditor
+            value={data}
+            language="js"
+            placeholder=""
+            onChange={(evn) => setData(evn.target.value)}
+            padding={15}
+            style={{
+              fontSize: 12,
+              backgroundColor: "#000000",
+              fontFamily:
+                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+            }}
+          />
         </GridItem>
-        <GridItem w='100%' h='10' bg='black'>
-            <Chatbot/>
+        <GridItem w="100%" h="10" bg="black">
+          <Chatbot />
         </GridItem>
-    </Grid>
-  
-  </>;
+      </Grid>
+    </>
+  );
 };
 
 export default App;
