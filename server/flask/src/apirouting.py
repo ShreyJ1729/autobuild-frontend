@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # Module handling routing of RESTful requests from Flask app
 
+import json
 from flask import request, current_app as app
+from modules.setter import Setter
 
 def _default_index() -> str:
     """
@@ -15,8 +17,14 @@ def _name_page(name: str) -> str:
     """
     return f"Hi, {name}. Welcome to this website!"
 
+def _create_react_pages() -> str:
+    body = request.get_json()
+    page_dump = body["page_dump"]
+    return json.dumps(Setter.json_to_react_pages(page_dump))
+
 routes: dict = {
     "/api/get": [_default_index, 'POST'],
+    "/api/setpages": [_create_react_pages, 'POST'],
     "/api/get2": [_name_page, 'GET'],
 }
 
