@@ -2,7 +2,7 @@
 
 <<|QUERY|>>
 Remove everything related to sockets
-<<|INPUT|>>
+<<|MERMAID|>>
 graph TD;
 
 %% UI components
@@ -88,10 +88,10 @@ ChatBody --> |reads|messagesAtom
 %% UI component props connections
 ChatHeader -.-> |props|ChatHeaderProps
 ChatMessage -.-> |props|ChatMessageProps
-
+<<|END|>>
 <<|QUERY|>>
 remove delete functionality
-<<|INPUT|>>
+<<|MERMAID|>>
 graph TD;
 
 %% UI components
@@ -168,9 +168,9 @@ NoteList --> |reads|notesAtom
 %% UI component props connections
 NoteItem -.-> |props|NoteItemProps
 NoteForm -.-> |props|NoteFormProps
-
+<<|END|>>
 <<|QUERY|>>
 {{QUERY}}
-<<|INPUT|>>
-{{INPUT}}
+<<|MERMAID|>>
+{{MERMAID}}
 <<|OUTPUT|>>

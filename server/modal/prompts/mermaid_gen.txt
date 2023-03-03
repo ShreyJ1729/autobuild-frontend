@@ -172,8 +172,7 @@ Canvas --> |reads and writes to|linesAtom
 
 %% UI component props connections
 Canvas -.-> |props|CanvasProps
-
-<<|INPUT|>>
-{{INPUT}}
-
+<<|END|>>
+<<|DESCRIPTION|>>
+{{DESCRIPTION}}
 <<|OUTPUT|>>
