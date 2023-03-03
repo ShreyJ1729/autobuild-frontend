@@ -1,0 +1,69 @@
+graph TD;
+
+%% UI components
+App["App.js"]
+NoteList["NoteList.js"]
+AddNoteForm["AddNoteForm.js"]
+NoteListItem["NoteListItem.js"]
+
+%% UI component connections
+App --> |renders|NoteList;
+App --> |renders|AddNoteForm;
+NoteList --> |renders|NoteListItem;
+
+%% utils/recoil
+utils/recoil[utils/recoil.js]
+noteListAtom["[{title:string,\ncontent:string,\ntimestamp:int}...]"]
+utils/recoil -.-> |noteListAtom|noteListAtom
+
+%% utils/recoil connections
+NoteList --> |reads noteListAtom|utils/recoil;
+AddNoteForm --> |appends to noteListAtom|utils/recoil
+
+%% component props
+NoteListProps["title:string,\ncontent:string,\ntimestamp:int"]
+NoteListItem -.-> |props|NoteListPropsgraph TD;
+
+%% UI components
+App["App.js"]
+RoomList["RoomList.js"]
+RoomListItem["RoomListItem.js"]
+Chat["Chat.js"]
+MessageList["MessageList.js"]
+MessageInput["MessageInput.js"]
+
+%% UI component connections
+App --> |renders|RoomList;
+RoomList --> |renders|RoomListItem;
+App --> |renders|Chat;
+Chat --> |renders|MessageList;
+Chat --> |renders|MessageInput;
+
+%% functions
+RoomListItemOnClick["onClick"]
+MessageInputHandleSend["handleSendMessage(userId, )"]
+socketSendMessageToServer["sendMessageToServer"]
+
+%% utils/recoil
+utils/recoil[utils/recoil.js]
+roomListAtom["[{id:string,\nname:string}]"]
+currentRoomIDAtom["string"]
+messageListAtom["[{user:string,\nmessage:string,\ntimestamp:int}]"]
+utils/recoil -.-> |roomListAtom|roomListAtom
+utils/recoil -.-> |currentRoomIDAtom|currentRoomIDAtom
+utils/recoil -.-> |messageListAtom|messageListAtom
+
+%% utils/socket.io
+utils/socket[utils/socket.js]
+utils/socket -.-> |joinRoom|utils/recoil
+utils/socket -.-> |broadcastMessage|utils/recoil
+utils/socket -.-> |function|socketBroadcastMessage
+%% note: joinRoom and broadcastMessage are custom functions using Socket.io
+
+%% utils/recoil connections
+RoomList --> |reads roomListAtom\n reads currentRoomIDAtom|utils/recoil;
+RoomListItem -.-> |function|RoomListItemOnClick --> |writes currentRoomIDAtom|utils/recoil;
+Chat --> |reads messageListAtom\nreads currentRoomIDAtom|utils/recoil;
+MessageInput -.->|function|MessageInputHandleSend --> |appends to messageListAtom|utils/recoil;
+MessageInputHandleSend --> |broadcasts|utils/socket
+MessageList --> |reads messageListAtom|utils/recoil;

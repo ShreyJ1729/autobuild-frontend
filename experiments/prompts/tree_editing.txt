@@ -1,0 +1,20 @@
+INSTRUCTIONS:
+Given
+1) a tree structure representing components in a React app
+2) an input requesting to modify the tree
+
+Return the correct operation(s) to perform on the tree.
+
+INPUT:
+query:
+{{QUERY}}
+
+tree:
+{{TREE}}
+
+OUTPUT:
+each line is one of:
+- ADD(<node name>, <absolute path to location>, <node summary>, <node children>)
+- DELETE(<node name>, <absolute path to location>)
+
+Begin Here:

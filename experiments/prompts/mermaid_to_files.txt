@@ -1,0 +1,51 @@
+<<|INPUT|>>
+graph TD;
+
+%% UI components
+App["App.js"]
+NoteList["NoteList.js"]
+NoteItem["NoteItem.js"]
+NoteForm["NoteForm.js"]
+
+%% UI component connections
+App --> |renders|NoteList
+NoteList --> |iteratively renders|NoteIte
+NoteList --> |renders|NoteForm
+
+%% UI component props
+NoteItemProps["title:string,\ncontent:string,\ntimestamp:string"]
+NoteFormProps["addNote:function"]
+
+%% UI component function definitions
+NoteForm-addNote["addNote"]
+
+%% UI component function connections
+NoteForm --> |calls|NoteForm-addNote
+
+%% utils/recoil
+utils/recoil[utils/recoil.js]
+notesAtom["[{id:string,\ntitle:string,\ncontent:string,\ntimestamp:string},...]"]
+utils/recoil -.-> |notesAtom|notesAtom
+
+%% recoil function connections
+NoteForm-addNote --> |updates notes|notesAtom
+NoteList --> |reads|notesAtom
+
+%% UI component props connections
+NoteItem -.-> |props|NoteItemProps
+NoteForm -.-> |props|NoteFormProps
+<<|OUTPUT|>>
+- src/
+    - App.js
+    - components/
+        - NoteList.js
+            - reads notesAtom and iteratively renders NoteItem
+            - renders NoteForm
+        - NoteItem.js
+            - props: title, content, timestamp
+        - NoteForm.js
+            - props: addNote
+            - calls addNote to update notesAtom in recoil
+    - utils/
+        - recoil.js
+            - notesAtom: [{id, title, content, timestamp}, ...]

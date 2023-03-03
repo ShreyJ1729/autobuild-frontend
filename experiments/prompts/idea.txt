@@ -1,0 +1,55 @@
+INSTRUCTIONS:
+Given an idea for a React web app, give all of the React components needed to build the user interface. Make sure to include every subcomponent mentioned. Include App as a component.
+If a component has no children, it should have an empty list for children.
+
+INPUT:
+Idea: {{IDEA}}
+
+OUTPUT:
+Encode as JSON, Use this format:
+{
+    "name": <single-word component name>,
+    "summary": <summary of component functionality>,
+    "children": <list of child components>
+    "props": ["<prop name>:<prop type>", ...]
+}
+
+EXAMPLE INPUT:
+Idea: A collaborative note-taking app that allows users to create notes, share notes, and edit notes in real time.
+
+EXAMPLE OUTPUT:
+{
+    "name": "App",
+    "summary": "The main component of the app",
+    "children": [
+        {
+            "name": "NoteList",
+            "summary": "A list of notes",
+            "children": [
+                {
+                    "name": "Note",
+                    "summary": "A single note",
+                    "children": [
+                        {
+                            "name": "NoteEditor",
+                            "summary": "A text editor for a note",
+                            "children": [],
+                            "props": ["text:string"]
+                        }
+                    ],
+                    "props": ["title:string", "text:string"]
+                }
+            ],
+            "props": []
+        },
+        {
+            "name": "NoteEditor",
+            "summary": "A text editor for a note",
+            "children": [],
+            "props": ["text:string"]
+        }
+    ],
+    "props": []
+}
+
+Begin here:

@@ -1,0 +1,54 @@
+Shrey Joshi Email: shrey.joshi@utdallas.edu
+Website: shreyjoshi.com LinkedIn: in/sjoshi1729
+Phone: +1 (972)-979-0673 GitHub: @shreyj1729
+Education
+• University of Texas at Dallas Richardson, TX
+B.S. Computer Science: CS2Honors, National Merit & Collegium V Scholar Expected Grad: 2025
+◦Relevant Coursework: Data Structures & Algorithms, C/C++ in UNIX, Computer Arch, Operating Systems
+◦Clubs & Activities: Blackstone LaunchPad, Association for Computing Machinery
+Experience
+• Minion AI Remote
+Software Engineer Jan 2023 - Present
+◦Building web infrastructure for LLMs, led by Alex Graveley and advised by Nat Friedman (Former CEO @ Github)
+◦Built an anything-to-text API for LLMs and currently working on tooling for rigorous prompt engineering
+◦Used: Python, Playwright, Fastapi, Modal
+• Boston University Boston, MA
+Machine Learning Research Intern June 2022 - Aug 2022
+◦Worked with NASA SERVIR applied science team to propose transformer (computer vision) and LSTM
+(time-series) models for estimating crop yield in West Africa using multi-spectral satellite (Landsat8) data
+◦Used: Python, PyTorch, OpenCV, Matlab, Scikit-Learn, AWS EC2 P3, Docker
+• University of Texas at Austin [Github] [Poster] [Publication] Remote
+Machine Learning Researcher Aug 2020 - April 2022
+◦Built a system for ML-driven landslide analytics & prediction based on real-time multi-spectral satellite data,
+processing 350GB+ of global geophysical data using PCA, Random Forests, Support Vector Machines, and LSTMs
+◦Presented & published research paper at the 2021 IEEE MIT URTC Conference
+◦Acquired $10,000 in research funding from NatGeo and US Agency for International Development (USAID)
+◦Used: Python, PyTorch, GCP, Docker
+• Grassroots Democrats HQ Remote
+Full Stack Developer June 2020 - Apr 2021
+◦Sole full-stack developer for organization of 450 volunteers (grassrootsdems.org)
+◦Clustered voter personas from openFEC API to intelligently distribute 600,000 postcards around the USA
+◦Built portal system for volunteer hour logging and automated texting system for daily shift reminders
+◦Used: Scikit-Learn, Django, React, MongoDB, Node
+Projects
+• PairProgram.app [Demo]
+◦Easy and minimalistic collaborative code editing in the browser. 300+ daily users at peak.
+◦Used: React, Node, Express
+• RetnoScan [Github]
+◦Transfer learning + MobileNet CNN to detect eye fundus abnormalities from your smartphone camera
+◦Used: Android Studio, TensorFlow/Keras
+• BirdWatch [Github]
+◦A mobile app that uses a ResNet CNN to identify species of birds and collects image/location data in a dashboard
+◦Used: Android Studio, TensorFlow/Keras, React, Firebase RTDB
+• Chess Engine [Github] [Demo]
+◦A simple JavaScript chess engine employing minimax and alpha-beta pruning
+Honors and Awards
+•Regeneron International Science & Engineering Fair: 2021 Best-of-Category (Top 22 of 7M Competitors);
+3x Grand/Special Award Winner; Cumulative $10,000 won
+•IEEE MIT URTC [Paper]: Presented & published computational landslide analytics paper at 2021 virtual conference
+•HackRice: 2nd overall of 283 HS/undergrad teams + Data2Knowledge Labs Challenge winner; $3000 cumulative in
+prizes (4 electric scooters & Apple Airpod Pros)
+Skills
+•Languages: Python, Java, C# Objective C, C++, HTML/CSS, JavaScript, Rust, Bash, LATEX, Swift, SQL
+•Tools/Libraries: PyTorch, TensorFlow/Keras, React, Node, Flask, Jupyter, EarthEngine, Unity, Firebase, Git, R
+•Miscellaneous: Unix, Excel, JIRA, AWS
