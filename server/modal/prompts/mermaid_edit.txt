@@ -1,5 +1,3 @@
-<<|OUTPUT|>> count = 3
-
 <<|QUERY|>>
 Remove everything related to sockets
 <<|MERMAID|>>

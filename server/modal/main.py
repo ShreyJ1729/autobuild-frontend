@@ -23,7 +23,7 @@ async def root():
     return {"message": "AutoBuild Backend"}
 
 
-def build_prompt(variables, prompt_path, prompt_instructions):
+def build_message_list(variables, prompt_path, prompt_instructions):
     prompt = open(prompt_path, "r").read()
 
     # replace variables in prompt
@@ -53,7 +53,7 @@ async def mermaid_gen(data: MermaidGenRequest, response: Response):
     print("mermaid-gen request received: ", data.description)
 
     load_openai_key()
-    messageList = build_prompt(
+    messageList = build_message_list(
         variables={
             "DESCRIPTION": data.description,
         },
@@ -82,7 +82,7 @@ async def mermaid_edit(data: MermaidEditRequest):
     print("mermaid-edit request received: ", data.mermaid, "\n", data.query)
 
     load_openai_key()
-    messageList = build_prompt(
+    messageList = build_message_list(
         variables={
             "MERMAID": data.mermaid,
             "QUERY": data.query,
@@ -99,6 +99,80 @@ async def mermaid_edit(data: MermaidEditRequest):
 
     print(mermaid)
     return {"mermaid": mermaid}
+
+
+def component_list_gen(mermaid: str):
+    print("component-list-gen request received: ", mermaid)
+
+    load_openai_key()
+    messageList = build_message_list(
+        variables={
+            "MERMAID": mermaid,
+        },
+        prompt_path="/root/prompts/component_list_gen.txt",
+        prompt_instructions="You are a helpful markdown parsing bot that takes in a markdown mermaid diagram and returns a list of components in a bottom-up traversal. Stop token: <<|END|>>",
+    )
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=messageList
+    )
+
+    component_list = completion.choices[0].message.content.rstrip("<<|END|>>")
+
+    print(component_list)
+    return {"component_list": component_list}
+
+
+def build_prompt(variables, prompt_path):
+    prompt = open(prompt_path, "r").read()
+
+    # replace variables in prompt
+    for key in variables:
+        prompt = prompt.replace(f"{{{{{key}}}}}", variables[key])
+
+    return prompt
+
+
+class MermaidToCodeRequest(BaseModel):
+    mermaid: str
+
+
+@app.post("/mermaid-to-code")
+async def mermaid_to_code(data: MermaidToCodeRequest):
+    print("mermaid-to-code request received: ", data.mermaid)
+    load_openai_key()
+
+    traversalList = component_list_gen(data.mermaid)
+    traversalList = traversalList["component_list"]
+    # convert string of list into list
+    traversalList = traversalList[1:-1].split(",")
+
+    print("traversalList: ", traversalList)
+
+    for component in traversalList:
+        print(component)
+        messageList = build_message_list(
+            variables={
+                "MERMAID": data.mermaid,
+                "FILENAME": component,
+            },
+            prompt_path="/root/prompts/mermaid_to_code.txt",
+            prompt_instructions="You are a helpful Typescript React code generation bot that takes in a filename and markdown mermaid diagram architecting a React app and you return the code for that file and ONLY that file. You do not import from any file or module that is not specified in the user-provided mermaid diagram. You import children component of a file that are shown in the markdown mermaid diagram. You always define a component's prop types in the same file as the component using the PropTypes module. You use tailwind css and create stunning, modern and sleek UI designs. Stop token: <<|END|>>",
+        )
+
+        print(messageList)
+
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", messages=messageList
+        )
+
+        tsx_code = completion.choices[0].message.content.rstrip("<<|END|>>")
+
+        print("--------------------")
+        print(component)
+        print("```tsx")
+        print(tsx_code)
+        print("```")
 
 
 @stub.asgi(mounts=[modal.Mount.from_local_dir("./", remote_path="/root/")])

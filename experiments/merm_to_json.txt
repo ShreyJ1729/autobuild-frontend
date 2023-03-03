@@ -1,0 +1,226 @@
+<<|END|>> count = 2
+
+<<|DESCRIPTION|>>
+This is a mermaid markdown for a frontend application built using React in Typescript that allows users to create, edit, and delete notes. 
+The app includes several components, such as a header, a note list, a note view, and a note form, as well as utility functions for managing notes using localStorage and a RESTful API. 
+Users can add new notes, search for notes, view and edit existing notes, and delete notes they no longer need. 
+<<|MERMAID MARKDOWN|>>
+graph TD;
+%% UI components
+App["App.tsx"]
+Header["Header.tsx"]
+NoteList["NoteList.tsx"]
+NoteListItem["NoteListItem.tsx"]
+NoteView["NoteView.tsx"]
+NoteForm["NoteForm.tsx"]
+
+%% UI component connections
+App --> |renders|Header
+App --> |renders|NoteList
+NoteList --> |iteratively renders|NoteListItem
+App --> |renders|NoteView
+NoteView --> |renders|NoteForm
+
+%% UI component props
+HeaderProps["addNote:function,\nsearchNotes:function"]
+NoteListProps["notes:array,\nselectedNoteId:string,\nselectNote:function"]
+NoteListItemProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\nisSelected:boolean,\nselectNote:function"]
+NoteViewProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\neditNote:function,\ndeleteNote:function"]
+NoteFormProps["noteId:string,\ntitle:string,\ncontent:string,\nsaveNote:function"]
+
+%% UI component function definitions
+Header-addNote["addNote"]
+Header-searchNotes["searchNotes"]
+NoteList-selectNote["selectNote"]
+NoteView-editNote["editNote"]
+NoteView-deleteNote["deleteNote"]
+NoteForm-saveNote["saveNote"]
+
+%% UI component function connections
+Header --> |calls|Header-addNote
+Header --> |calls|Header-searchNotes
+NoteList --> |calls|NoteList-selectNote
+NoteView --> |calls|NoteView-editNote
+NoteView --> |calls|NoteView-deleteNote
+NoteForm --> |calls|NoteForm-saveNote
+
+%% utils/localStorage
+utils/localStorage[utils/localStorage.tsx]
+notesKey["notes"]
+utils/localStorage -.-> |localStorage|localStorage
+
+%% utils/markdown
+utils/markdown[utils/markdown.tsx]
+convertMarkdown["convertMarkdown"]
+utils/markdown -.-> |markdown|marked
+
+%% utils/api
+utils/api[utils/api.tsx]
+getAllNotes["getAllNotes"]
+getNoteById["getNoteById"]
+createNote["createNote"]
+updateNote["updateNote"]
+deleteNote["deleteNote"]
+utils/api -.-> |axios|axios
+
+%% utils/api function connections
+getAllNotes --> |fetches notes from|utils/api
+getNoteById --> |fetches note from|utils/api
+createNote --> |creates note using|utils/api
+updateNote --> |updates note using|utils/api
+deleteNote --> |deletes note using|utils/api
+
+%% utils/localStorage function connections
+getAllNotes --> |saves notes to|utils/localStorage
+getNoteById --> |reads notes from|utils/localStorage
+createNote --> |saves notes to|utils/localStorage
+updateNote --> |saves notes to|utils/localStorage
+deleteNote --> |saves notes to|utils/localStorage
+
+%% UI component props connections
+Header -.-> |props|HeaderProps
+NoteList -.-> |props|NoteListProps
+NoteListItem -.-> |props|NoteListItemProps
+NoteView -.-> |props|NoteViewProps
+NoteForm -.-> |props|NoteFormProps
+<<|OUTPUT|>>
+{
+  "src": {
+    "components": {
+      "App.tsx": {
+        "renders": ["Header", "NoteList", "NoteView"],
+        "props": {},
+        "description": "This is the root component of the React app. It renders the Header, NoteList, NoteView, and NoteForm components. It passes the addNote and searchNotes functions as props to the Header component, and the notes, selectedNoteId, and selectNote functions as props to the NoteList component."
+      },
+      "Header.tsx": {
+        "renders": [],
+        "props": {
+          "addNote": "function",
+          "searchNotes": "function"
+        },
+        "description": "This component renders the app header and search bar. It receives the addNote and searchNotes functions as props, both of which are of type function.",
+        "calls": ["Header-addNote", "Header-searchNotes"]
+      },
+      "NoteList.tsx": {
+        "renders": ["NoteListItem"],
+        "props": {
+          "notes": "array",
+          "selectedNoteId": "string",
+          "selectNote": "function"
+        },
+        "description": "NoteList: This component renders the list of notes. It receives the notes, selectedNoteId, and selectNote functions as props. notes is an array of notes, selectedNoteId is a string representing the id of the currently selected note, and selectNote is a function that takes a note id as input and sets it as the currently selected note.",
+        "calls": ["NoteList-selectNote"]
+      },
+      "NoteListItem.tsx": {
+        "renders": [],
+        "props": {
+          "noteId": "string",
+          "title": "string",
+          "content": "string",
+          "updatedAt": "string",
+          "isSelected": "boolean",
+          "selectNote": "function"
+        },
+        "description": "This component renders an individual note in the NoteList. It receives the noteId, title, content, updatedAt, isSelected, and selectNote functions as props. noteId, title, content, and updatedAt are all strings representing the corresponding properties of the note. isSelected is a boolean indicating whether or not the note is currently selected, and selectNote is a function that takes a note id as input and sets it as the currently selected note."
+      },
+      "NoteView.tsx": {
+        "renders": ["NoteForm"],
+        "props": {
+          "noteId": "string",
+          "title": "string",
+          "content": "string",
+          "updatedAt": "string",
+          "editNote": "function",
+          "deleteNote": "function"
+        },
+        "description": "This component renders the currently selected note. It receives the noteId, title, content, updatedAt, editNote, and deleteNote functions as props. noteId, title, content, and updatedAt are all strings representing the corresponding properties of the note. editNote is a function that takes a note object as input and updates it, and deleteNote is a function that takes a note id as input and deletes the corresponding note.",
+        "calls": ["NoteView-editNote", "NoteView-deleteNote"]
+      },
+      "NoteForm.tsx": {
+        "renders": [],
+        "props": {
+          "noteId": "string",
+          "title": "string",
+          "content": "string",
+          "saveNote": "function"
+        },
+        "description": "This component renders a form for creating or editing a note. It receives the noteId, title, content, and saveNote functions as props. noteId, title, and content are all strings representing the corresponding properties of the note, and saveNote is a function that takes a note object as input and saves it.",
+        "calls": ["NoteForm-saveNote"]
+      }
+    },
+    "utils": {
+      "localStorage.tsx": {
+        "savesTo": [],
+        "readsFrom": [],
+        "calls": [],
+        "description": "contains the localStorage utility function, which is used for saving and retrieving notes from the browser's localStorage. It also defines the notesKey variable, which is a string representing the key used to store notes in localStorage.",
+        "props": {}
+      },
+      "markdown.tsx": {
+        "savesTo": [],
+        "readsFrom": [],
+        "calls": ["convertMarkdown"],
+        "description": "contains the convertMarkdown function, which is used to convert markdown text to HTML. It uses the marked library to do this.",
+        "props": {}
+      },
+      "api.tsx": {
+        "savesTo": ["utils/localStorage"],
+        "readsFrom": ["utils/localStorage"],
+        "calls": ["getAllNotes", "getNoteById", "createNote", "updateNote", "deleteNote"],
+        "props": {}
+      }
+    },
+    "index.ts": {}
+  }
+}
+<<|END|>>
+<<|DESCRIPTION|>>
+This is a mermaid markdown for a chat application built using React in Typescript where various UI components work together to display messages sent by users.
+Users can send messages, view messages, and participate in a group chat.
+<<|MERMAID MARKDOWN|>>
+graph TD;
+
+%% UI components
+App["App.js"]
+ChatWindow["ChatWindow.js"]
+ChatHeader["ChatHeader.js"]
+ChatBody["ChatBody.js"]
+ChatInput["ChatInput.js"]
+ChatMessage["ChatMessage.js"]
+
+%% UI component connections
+App --> |renders|ChatWindow
+ChatWindow --> |renders|ChatHeader
+ChatWindow --> |renders|ChatBody
+ChatWindow --> |renders|ChatInput
+ChatBody --> |iteratively renders|ChatMessage
+
+%% UI component props
+ChatHeaderProps["roomName:string"]
+ChatMessageProps["author:string,\ntext:string,\ntimestamp:string"]
+
+%% UI component function definitions
+ChatInput-sendMessage["sendMessage"]
+
+%% UI component function connections
+ChatInput --> |calls|ChatInput-sendMessage
+
+%% utils/socket.io
+utils/socket.io[utils/socket.io.js]
+socket["socket.io-client"]
+utils/socket.io -.-> |socket|socket
+
+%% utils/recoil
+utils/recoil[utils/recoil.js]
+messagesAtom["[{id:string,\nauthor:string,\ntext:string,\ntimestamp:string},...]"]
+utils/recoil -.-> |messagesAtom|messagesAtom
+
+%% recoil function connections
+ChatInput-sendMessage --> |sends through socket|utils/socket.io
+utils/socket.io --> |updates messages|messagesAtom
+ChatBody --> |reads|messagesAtom
+
+%% UI component props connections
+ChatHeader -.-> |props|ChatHeaderProps
+ChatMessage -.-> |props|ChatMessageProps
+<<|OUTPUT|>>
