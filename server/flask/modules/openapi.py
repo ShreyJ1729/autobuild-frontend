@@ -13,14 +13,7 @@ print(openai.api_key)
 class OpenAPI:
 
     @staticmethod
-    def _run_prompt(prompt: str,
-                    engine: str,
-                    max_tokens: int,
-                    temperature: float,
-                    top_p: float,
-                    frequency_penalty: float, 
-                    presence_penalty: float
-                ) -> str:
+    def _run_prompt(model: str, messages: list) -> str:
         """
         Runs an OpenAI completion prompt [private function]
         @param prompt: The prompt to run
@@ -31,14 +24,9 @@ class OpenAPI:
         @param presence_penalty: The presence penalty of the model
         @return output: The output of the prompt
         """
-        response = openai.Completion.create(
-            engine=engine,
-            prompt=prompt,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty,
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages
         )
         print(response)
         return response.choices[0].text
@@ -52,4 +40,4 @@ class OpenAPI:
         @param code: Whether or not the prompt is code
         @return output: The output of the prompt
         """
-        return OpenAPI._run_prompt(prompt, "davinci-codex" if code else "text-davinci-003", 500, 0, 1, 0, 0)
+        return OpenAPI._run_prompt(prompt, "davinci-codex" if code else "gpt-3.5-turbo", messagelist)
