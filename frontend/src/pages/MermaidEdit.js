@@ -1,5 +1,5 @@
-import React, { Component, Fragment, useEffect, useState, useRef } from "react";
-import { RecoilRoot, atom, useRecoilState } from "recoil";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import { mermaidData } from "../recoil/atoms.js";
 import {
     Box,
@@ -19,10 +19,10 @@ import Mermaid from "./Mermaid";
 import example from "./defaultMermaid";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import Chatbot from "./Chatbot.js";
+import Preview from "./MermaidPreview.js";
 
 const App = () => {
   const [data, setData] = useRecoilState(mermaidData);
-  const [mermaidState, setMermaidState] = useState(example);
   const [content, setContent] = useState([]);
   const [code, setCode] = useState(`  
     graph TD;
@@ -47,13 +47,19 @@ const App = () => {
     ChatMessage-.->|props|ChatMessageProps;
   `);
 
-  useEffect(() => {
-    let out = `${data["mermaid"]}`;
-    out = out.slice(0, out.length - 1);
-    setMermaidState(out);
-    console.log(out);
-    content.push(<Mermaid key={content.length} chart={out} />);
-  }, [data, content]);
+  // useEffect(() => {
+  //   // push new mermaid chart to content
+  //   content.push(<Mermaid chart={data["mermaid"]} />);
+  //   // setContent([...content, <Mermaid chart={data["mermaid"]} />]);
+  // }, [data]);
+
+  // useEffect(() => {
+  //   if (content.length > 2) {
+  //     console.log("mermaid content: ", content.length);
+  //     console.log("mermaid init");
+  //     initializeMermaid();
+  //   }
+  // }, [content]);
 
   return <>
     
@@ -81,7 +87,7 @@ const App = () => {
     </Flex>
 
     {/* Diagram */}
-    {content.length > 0 ? content[content.length - 1] : <></>}
+    <Preview code={data} />
   
     
     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
