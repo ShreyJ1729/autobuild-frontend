@@ -1,24 +1,31 @@
 React frontend app in Typescript file and folder structure:
-```
 src/
 ├── index.tsx
 ├── App.tsx
 ├── components/
-│   └── Canvas/
-│       └── Canvas.tsx
+│   ├── FileExplorer/
+│   │   ├── FileExplorer.tsx
+│   │   ├── Folder/
+│   │   │   └── Folder.tsx
+│   │   └── File/
+│   │       └── File.tsx
+│   ├── ContextMenu/
+│   │   ├── ContextMenu.tsx
+│   │   └── ContextMenuOption/
+│   │       └── ContextMenuOption.tsx
 └── utils/
-    ├── socket.io/
-    │   └── socket.io.ts
+    ├── restAPI/
+    │   └── restAPI.ts
     └── recoil/
         └── recoil.ts
-```
 
-Components and their descriptions for the collaborative whiteboard app:
-- App: The root component of the application. It renders the Canvas component and passes the AppProps as its props. It doesn't call any other component.
-  Props: None
-- Canvas: Renders a canvas for drawing and handles user input for drawing on the canvas. It receives the CanvasProps as its props and has a setColor and setLineWidth function for updating drawing settings.
-  Props: canvasRef: RefObject<HTMLCanvasElement>, drawingMode: boolean, setColor: (color: string) => void, setLineWidth: (lineWidth: number) => void
-
-Utils:
-- utils/socket.io: Contains the socket.io-client library for real-time communication. It exports the socket object.
-- utils/recoil: Contains the linesAtom for state management with Recoil. It exports the linesAtom object.
+Components and their descriptions for the file system app:
+- App: The root component of the application. It renders the FileExplorer component and passes the AppProps as its props. It doesn't call any other component.
+    Props: None
+- FileExplorer: Renders the file system view. It iteratively renders the Folder and File components for each folder and file in the filesAtom. It receives no props and has a fetchFiles function to retrieve file data.
+    Props: None
+- Folder: Renders a single folder and has a copyFile function to duplicate a file to the folder, which reads and writes the selectedItemAtom.
+    Props: name: string
+- File: Renders a single file and has a deleteFile function to delete the file, which reads and writes the selectedItemAtom.
+    Props: name: string, type: string, modified: string
+- ContextMenu: Renders the context menu and has openContextMenu and closeContextMenu functions to show and hide the menu
