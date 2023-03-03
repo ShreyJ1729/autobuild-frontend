@@ -24,7 +24,6 @@ import { mermaidData } from "../recoil/atoms.js";
 import bg from "../abstract.jpg";
 
 const LandingPage2 = () => {
-
   const navigate = useNavigate(); // routing
   const { isOpen, onToggle } = useDisclosure(); // menu
   const [data, setData] = useRecoilState(mermaidData); // requested mermaid data
@@ -37,8 +36,8 @@ const LandingPage2 = () => {
 
   // send inp to backend
   function sendInput(e) {
-    console.log('sending input');
-    
+    console.log("sending input");
+
     // format
     const obj = {
       description: input,
@@ -51,8 +50,12 @@ const LandingPage2 = () => {
       )
       .then((res) => {
         const mermaid_code = res.data;
-        // update recoil state
+        console.log(102990123);
+        console.log(mermaid_code);
         setData(mermaid_code);
+      })
+      .then(() => {
+        // navigate(`/app`);
       });
 
     // go to mermaid edit page
@@ -72,9 +75,7 @@ const LandingPage2 = () => {
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
       >
-
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          
           <Text
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
@@ -85,47 +86,46 @@ const LandingPage2 = () => {
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <Stack direction={"row"} spacing={4}>
-                <Box key={'About'}>
+              <Box key={"About"}>
                 <Popover trigger={"hover"} placement={"bottom-start"}>
-                    <PopoverTrigger>
+                  <PopoverTrigger>
                     <Link
-                        p={2}
-                        href={'/about' ?? "#"}
-                        fontSize={"sm"}
-                        fontWeight={500}
-                        color={"white.800"}
-                        _hover={{
+                      p={2}
+                      href={"/about" ?? "#"}
+                      fontSize={"sm"}
+                      fontWeight={500}
+                      color={"white.800"}
+                      _hover={{
                         textDecoration: "none",
                         color: "white",
-                        }}
+                      }}
                     >
-                        About
+                      About
                     </Link>
-                    </PopoverTrigger>
+                  </PopoverTrigger>
                 </Popover>
-                </Box>
-                <Box key={'Pricing'}>
+              </Box>
+              <Box key={"Pricing"}>
                 <Popover trigger={"hover"} placement={"bottom-start"}>
-                    <PopoverTrigger>
+                  <PopoverTrigger>
                     <Link
-                        p={2}
-                        href={'/pricing' ?? "#"}
-                        fontSize={"sm"}
-                        fontWeight={500}
-                        color={"white.800"}
-                        _hover={{
+                      p={2}
+                      href={"/pricing" ?? "#"}
+                      fontSize={"sm"}
+                      fontWeight={500}
+                      color={"white.800"}
+                      _hover={{
                         textDecoration: "none",
                         color: "white",
-                        }}
+                      }}
                     >
-                        Pricing
+                      Pricing
                     </Link>
-                    </PopoverTrigger>
+                  </PopoverTrigger>
                 </Popover>
-                </Box>
+              </Box>
             </Stack>
           </Flex>
-
         </Flex>
 
         <Stack
@@ -159,13 +159,9 @@ const LandingPage2 = () => {
             Sign Up
           </Button>
         </Stack>
-
       </Flex>
 
-
       <Container maxW={"3xl"}>
-
-
         <Stack
           as={Box}
           textAlign={"center"}
@@ -194,7 +190,6 @@ const LandingPage2 = () => {
             alignSelf={"center"}
             position={"relative"}
           >
-
             <Textarea
               placeholder="2-3 sentences recommended"
               borderColor="green"
@@ -226,7 +221,6 @@ const LandingPage2 = () => {
     </>
   );
 };
-
 
 // export
 export default LandingPage2;
