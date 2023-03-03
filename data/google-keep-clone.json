@@ -1,0 +1,844 @@
+{
+  "components/AuthForm/AuthForm.tsx": {
+    "type": "component",
+    "moduleImports": [],
+    "fileImports": ["fbase", "components/AuthForm/AuthFormElements"],
+    "props": {
+      "onClick": "(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void"
+    },
+    "methods": {
+      "handleToggle": "() => void",
+      "handleChange": "(e: React.ChangeEvent<HTMLInputElement>) => void",
+      "handleSubmit": "(e: React.FormEvent<HTMLFormElement>) => void"
+    },
+    "contains": ["Icon", "SocialIconProp", "AuthFormProp", "SocialIcon"]
+  },
+  "components/AuthForm/AuthFormElements.tsx": {
+    "type": "noncomponent",
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "methods": [],
+    "contains": [
+      "Container",
+      "Form",
+      "FormInput",
+      "FormLabel",
+      "FormTitle",
+      "SubmitBtn",
+      "FormBtn",
+      "SocialsContainer",
+      "BtnContainer",
+      "IconContainer",
+      "SocialLogInTitle"
+    ]
+  },
+  "components/ColorPalette/ColorPalette.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": ["shared/firebase"],
+    "props": {
+      "id": "string",
+      "isInputField": "boolean",
+      "onHover": "() => void",
+      "onUnHover": "() => void",
+      "onClick": "(color: string) => void"
+    },
+    "methods": {
+      "handleClick": "(e: React.MouseEvent, color: string) => void"
+    },
+    "contains": ["ColorPaletteContainer", "ColorPaletteBtn", "ColorPaletteProp"]
+  },
+  "components/Draggable/Draggable.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-dnd"],
+    "fileImports": ["shared/dnd"],
+    "props": {
+      "handleMove": "(dragIndex: number, hoverIndex: number) => void",
+      "index": "number",
+      "id": "string",
+      "children": "React.ReactNode"
+    },
+    "methods": {},
+    "contains": ["Wrapper", "DraggableProps", "DragItem"]
+  },
+  "components/Layout/Layout.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [
+      "components/Layout/Header/Header",
+      "components/Layout/Footer/Footer",
+      "components/UI/FlashMessage/FlashMessage",
+      "App"
+    ],
+    "props": {
+      "userObj": "UserObjType",
+      "children": "React.ReactNode"
+    },
+    "methods": {},
+    "contains": ["Container", "Content", "LayoutProp", "UserObjType"]
+  },
+  "components/Layout/Footer/Footer.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": ["FooterContainer", "Copyright"]
+  },
+  "components/Layout/Header/Header.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "@material-ui/core/Tooltip"],
+    "fileImports": [
+      "components/Layout/Header/Profile",
+      "components/Layout/Header/Logo",
+      "components/Layout/SideNav/SideNav",
+      "components/UI/SearchBar/SearchBar",
+      "App"
+    ],
+    "props": {
+      "userObj": "UserObjType"
+    },
+    "methods": {
+      "setOpenNav": "(openNav: boolean) => void"
+    },
+    "contains": ["HeaderContainer", "Menu", "HeaderProp"]
+  },
+  "components/Layout/Header/Logo.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-router-dom"],
+    "fileImports": ["shared/utility"],
+    "props": {
+      "location": "RouteComponentProps"
+    },
+    "methods": {},
+    "contains": ["LogoContainer", "LogoImg", "LogoText"]
+  },
+  "components/Layout/Header/Profile.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "@material-ui/core/Tooltip"],
+    "fileImports": ["containers/Toolbar/Tool/ToolElements", "fbase", "App"],
+    "props": {
+      "userObj": "UserObj"
+    },
+    "methods": {
+      "handleClick": "() => void",
+      "handleSignOut": "() => void"
+    },
+    "contains": ["Wrapper", "ProfileImg", "SignOutBtn", "ProfileProp"]
+  },
+  "components/Layout/SideNav/SideNavItems/SideNavItems.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-router-dom", "react-redux"],
+    "fileImports": [
+      "containers/Toolbar/Tool/ToolElements",
+      "containers/Label/EditLabel/EditLabel",
+      "containers/Label/LabelList/LabelList",
+      "fbase",
+      "shared/types",
+      "store/actions/notes",
+      "store/reducers/index"
+    ],
+    "contains": [
+      "Link",
+      "IconContainer",
+      "Title",
+      "Container",
+      "NavMenuProp",
+      "NavItemProp"
+    ],
+    "methods": {
+      "handleClick": "(e: React.MouseEvent) => void"
+    }
+  },
+  "components/Layout/SideNav/SideNav.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-router-dom"],
+    "fileImports": ["components/Layout/SideNav/SideNavItems/SideNavItems"],
+    "props": {
+      "isHover": "boolean",
+      "onHover": "(bool: boolean) => void"
+    },
+    "methods": {
+      "handleClick": "(e: React.MouseEvent) => void",
+      "handleSignOut": "() => void"
+    },
+    "contains": ["NavContainer", "Overlay", "SideNavProp"]
+  },
+  "components/Notes/NotesLayout/NotesLayout.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-masonry-css"],
+    "fileImports": ["components/Notes/NotesLayout/NotesLayout.css"],
+    "props": {
+      "notes": "JSX.Element[]",
+      "title": "string"
+    },
+    "methods": {},
+    "contains": [
+      "NotesContainer",
+      "Title",
+      "BreakPoints",
+      "NotesLayout",
+      "BREAK_POINTS"
+    ]
+  },
+  "components/Notes/Notes.tsx": {
+    "type": "component",
+    "moduleImports": [],
+    "fileImports": [
+      "containers/Note/Note",
+      "components/Notes/NotesLayout/NotesLayout",
+      "components/UI/Backdrop/Backdrop",
+      "shared/types",
+      "store/reducers/index"
+    ],
+    "props": {
+      "notes": "NoteObj[]"
+    },
+    "methods": {},
+    "contains": ["NotesProp"]
+  },
+  "components/TodoList/CompletedTodo/CompletedTodo.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {
+      "doneTaskCount": "number",
+      "clicked": "() => void",
+      "isNote": "boolean"
+    },
+    "methods": {},
+    "contains": [
+      "GreyLine",
+      "ArrowIcon",
+      "Title",
+      "TitleContainer",
+      "CompletedTodoProp"
+    ]
+  },
+  "components/TodoList/TodoInput.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "uniqid"],
+    "fileImports": [],
+    "props": {
+      "onAdd": "(todoItem: Todo) => void"
+    },
+    "methods": {
+      "handleChange": "(e: React.ChangeEvent<HTMLInputElement>) => void"
+    },
+    "contains": [
+      "Wrapper",
+      "PlusIcon",
+      "TodoItemInput",
+      "Todo",
+      "TodoInputProp"
+    ]
+  },
+  "component/TodoList/TodoItem/TodoItem.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [
+      "containers/Toolbar/Tool/Tool",
+      "components/TodoList/TodoInput/TodoInput",
+      "shared/types"
+    ],
+    "props": {
+      "todo": "Todo",
+      "todos": "Todo[]",
+      "isEditable": "boolean",
+      "isDoneTodo": "boolean",
+      "readOnly": "boolean",
+      "inputFocus": "boolean",
+      "noteID": "string",
+      "onCheck": "(id: TodoItemID) => void",
+      "onDelete": "(todoID: TodoItemID, todos: Todo[], noteID?: string) => void",
+      "onChange": "(e: React.ChangeEvent<HTMLInputElement>, id: TodoItemID) => void",
+      "onBlur": "(noteID: string | undefined, todos: Todo[] | undefined) => void"
+    },
+    "methods": {
+      "handleOnMouseOver": "(id: TodoItemID) => void",
+      "handleOnMouseLeave": "(id: TodoItemID) => void",
+      "handleDeleteTodo": "() => void"
+    },
+    "contains": ["Wrapper", "CheckBox", "DragIcon", "TodoItemProp", "isHover"]
+  },
+  "containers/Auth/Auth.tsx": {
+    "type": "component",
+    "moduleImports": [],
+    "fileImports": ["fbase", "components/AuthForm/AuthForm"],
+    "props": {},
+    "methods": {
+      "handleClickSocial": "() => void"
+    },
+    "contains": []
+  },
+  "containers/InputField/InputElements.tsx": {
+    "type": "noncomponent",
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": ["Wrapper", "Form", "Input", "TextArea"]
+  },
+  "containers/InputField/InputField.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [
+      "containers/InputField/InputElements",
+      "containers/Toolbar/Tool/Tool",
+      "containers/Toolbar/Toolbar",
+      "containers/Note/NoteElements",
+      "containers/Label/Label",
+      "containers/Label/LabelElements/NoteLabel/NoteLabel",
+      "components/TodoList/TodoList",
+      "shared/utility",
+      "hooks/useClickOutside",
+      "shared/types"
+    ],
+    "props": {},
+    "methods": {
+      "handleResetNote": "() => void",
+      "handleUpdateNote": "(e: UpdateNoteEvent) => void",
+      "handleToggle": "(toolType: ToggleTool) => void",
+      "handleChangeColor": "(color: string) => void",
+      "handleAddLabel": "(label: string) => void",
+      "handleRemoveLabel": "(label: string) => void",
+      "handleAddNote": "(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, note: Note) => void"
+    },
+    "contains": []
+  },
+  "containers/Label/Label.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-redux"],
+    "fileImports": [
+      "shared/firebase",
+      "store/reducers",
+      "containers/Label/LabelElements/LabelItem/LabelItem",
+      "containers/Label/LabelElements/LabelInput/LabelInput",
+      "containers/Label/LabelElements/LabelCreator/LabelCreator",
+      "hooks/useClickOutside",
+      "shared/types"
+    ],
+    "props": {},
+    "methods": {
+      "addLabelNote": "(id: string, label: string) => Promise<void>",
+      "handleLabelToNote": "(id: string, label: string) => Promise<void>"
+    },
+    "contains": []
+  },
+  "containers/Label/EditLabel/EditLabel.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-redux"],
+    "fileImports": [
+      "containers/Label/EditLabel/EditLabelItem/EditLabelItem",
+      "containers/Label/Label",
+      "shared/types",
+      "store/reducers/index"
+    ],
+    "props": {
+      "showNav": "Dispatcher<boolean>"
+    },
+    "methods": {
+      "handleClick": "(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void"
+    },
+    "contains": []
+  },
+  "containers/Label/EditLabel/EditLabelItem/EditLabelItem.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [
+      "components/TodoList/TodoInput/TodoInput",
+      "containers/Toolbar/Tool/Tool",
+      "shared/types"
+    ],
+    "props": {
+      "label": "LabelObj",
+      "labelCreator": "boolean"
+    },
+    "methods": {
+      "handleBlur": "(e: React.FocusEvent<HTMLDivElement>): void",
+      "handleClick": "(e: ClickEvent): void",
+      "handleClearInput": "() => void"
+    },
+    "contains": []
+  },
+  "containers/Label/LabelElements/LabelCreater/LabelCreator.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": ["shared/firebase", "shared/types"],
+    "props": {
+      "id": "string",
+      "label": "string",
+      "isInputField": "boolean",
+      "addLabelToNote": "(id: string, label: string) => void",
+      "addLabelToInputField": "(label: string) => void",
+      "clearLabelInput": "Dispatcher<string>"
+    },
+    "methods": {
+      "handleClick": "(label: string) => void"
+    },
+    "contains": []
+  },
+  "containers/Label/LabelElements/LabelInput/LabelInput.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": ["components/TodoList/TodoInput/TodoInput", "shared/types"],
+    "props": {
+      "label": "string",
+      "setLabel": "Dispatcher<string>"
+    },
+    "methods": {},
+    "contains": []
+  },
+  "containers/Label/LabelElements/LabelItem/LabelItem.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": ["components/TodoList/TodoItem/TodoItem", "shared/types"],
+    "props": {
+      "label": "string",
+      "id": "string",
+      "note": "Note",
+      "onRemove": "(label: string) => void",
+      "isInputField": "boolean",
+      "removeLabelFromNote": "(id: string, label: string) => void",
+      "addLabelToNote": "(id: string, label: string) => void",
+      "addLabelToInputField": "(label: string) => void"
+    },
+    "methods": {
+      "handleChange": "(id: string, label: string) => void"
+    },
+    "contains": []
+  },
+  "containers/Label/LabelElements/NoteLabel/NoteLabel.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": ["shared/firebase", "containers/Toolbar/Tool/Tool"],
+    "props": {
+      "labels": "string[]",
+      "id": "string",
+      "onRemove": "(label: string) => void",
+      "isInputField": "boolean"
+    },
+    "methods": {
+      "handleHover": "(label: string) => void",
+      "handleLeave": "() => void",
+      "handleRemove": "(id: string, label: string) => Promise<void>"
+    },
+    "contains": []
+  },
+  "components/UI/Backdrop/Backdrop.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-redux"],
+    "fileImports": [
+      "react-transition-group",
+      "store/actions/notes",
+      "store/reducers/index"
+    ],
+    "props": {},
+    "methods": {},
+    "contains": []
+  },
+  "components/UI/FlashMessage/FlashMessage.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components", "react-redux"],
+    "fileImports": [
+      "react-transition-group",
+      "store/actions/view",
+      "store/reducers/index"
+    ],
+    "props": {},
+    "methods": {},
+    "contains": []
+  },
+  "components/UI/NoMatching/NoMatching.tsx": {
+    "type": "component",
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {
+      "text": "string"
+    },
+    "methods": {},
+    "contains": []
+  },
+  "components/UI/PageLoader/PageLoader.tsx": {
+    "type": "component",
+    "moduleImports": [
+      "styled-components",
+      "@material-ui/core/CircularProgress"
+    ],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": []
+  },
+  "components/UI/SearchBar/SearchBar.tsx": {
+    "type": "component",
+    "moduleImports": [
+      "styled-components",
+      "react-redux",
+      "@material-ui/core/Tooltip"
+    ],
+    "fileImports": [
+      "store/actions/view",
+      "hooks/useFirstRender",
+      "hooks/useClickOutside",
+      "containers/Toolbar/Tool/ToolElements"
+    ],
+    "props": {},
+    "methods": {
+      "handleChange": "(e: React.ChangeEvent<HTMLInputElement>): void",
+      "handleClick": "(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void"
+    },
+    "contains": []
+  },
+  "reducers/index.ts": {
+    "type": "noncomponent",
+    "moduleImports": ["redux"],
+    "fileImports": ["reducers/view", "reducers/notes"],
+    "props": {},
+    "methods": {},
+    "contains": ["rootReducer"]
+  },
+  "reducers/notes.ts": {
+    "type": "noncomponent",
+    "moduleImports": ["redux"],
+    "fileImports": ["store/actions/notes", "shared/utility"],
+    "props": {},
+    "methods": {
+      "initNotes": "(state: NotesState, action: InitNotes): NotesState",
+      "initLabels": "(state: NotesState, action: InitLabels): NotesState",
+      "getEditableNote": "(state: NotesState, action: GetEditableNote): NotesState",
+      "clearEditableNote": "(state: NotesState, action: ClearEditableNote): NotesState",
+      "removeLabel": "(state: NotesState, action: RemoveLabel): NotesState",
+      "renameLabel": "(state: NotesState, action: RenameLabel): NotesState"
+    },
+    "contains": ["reducer"]
+  },
+  "reducers/view.ts": {
+    "type": "noncomponent",
+    "moduleImports": ["redux"],
+    "fileImports": ["store/actions/view", "shared/utility"],
+    "props": {},
+    "methods": {
+      "showFlashMessage": "(state: ViewState, action: ShowFlashMessage): ViewState",
+      "hideFlashMessage": "(state: ViewState): ViewState",
+      "getSearchQuery": "(state: ViewState, action: GetSearchQuery): ViewState"
+    },
+    "contains": ["reducer"]
+  },
+  "hooks/useClickOutside.tsx": {
+    "type": "component",
+    "moduleImports": [],
+    "fileImports": [],
+    "props": {
+      "initialValue": "boolean"
+    },
+    "methods": {
+      "handleClickOutside": "(e: any) => void"
+    },
+    "contains": []
+  },
+  "hooks/useFirstRender.tsx": {
+    "type": "component",
+    "moduleImports": [],
+    "fileImports": [],
+    "props": {},
+    "methods": {
+      "handleClickOutside": "(e: any) => void"
+    },
+    "contains": []
+  },
+  "pages/ArchivedNote.tsx": {
+    "type": "component",
+    "moduleImports": ["react-redux", "styled-components", "fbase"],
+    "fileImports": [
+      "components/Notes/Notes",
+      "shared/utility",
+      "components/UI/NoMatching/NoMatching",
+      "store/reducers",
+      "shared/types"
+    ],
+    "props": {},
+    "methods": {},
+    "contains": ["ArchiveIcon", "Text", "Container"]
+  },
+  "pages/Home.tsx": {
+    "type": "component",
+    "moduleImports": ["react-redux", "fbase"],
+    "fileImports": [
+      "store/actions/notes",
+      "containers/InputField/InputField",
+      "components/Notes/Notes",
+      "styled-components",
+      "shared/utility",
+      "components/UI/NoMatching/NoMatching",
+      "store/reducers",
+      "shared/types"
+    ],
+    "props": {},
+    "methods": {},
+    "contains": ["Container"]
+  },
+  "containers/Toolbar/Toolbar.tsx": {
+    "type": "component",
+    "moduleImports": ["react-redux", "styled-components"],
+    "fileImports": [
+      "containers/Toolbar/Tool/Tool",
+      "components/ColorPalette/ColorPalette",
+      "shared/types",
+      "store/reducers"
+    ],
+    "props": {
+      "id": "string",
+      "onHover": "boolean",
+      "onAddNote": "(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void",
+      "onToggle": "(noteProperty: ToggleTool) => void",
+      "onClick": "(color: string) => void",
+      "isInputField": "boolean",
+      "setShowLabel": "Dispatcher<boolean>",
+      "onDelete": "Dispatcher<boolean>",
+      "isChecked": "boolean",
+      "onClose": "(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+    },
+    "methods": {},
+    "contains": [
+      "Icon",
+      "ToolbarProp",
+      "ToolContainer",
+      "ToolbarContainer",
+      "CloseBtn"
+    ]
+  },
+  "containers/Toolbar/Tool/Tool.tsx": {
+    "type": "component",
+    "moduleImports": ["react-redux", "@material-ui/core/Tooltip"],
+    "fileImports": [
+      "store/actions/view",
+      "containers/Toolbar/Tool/ToolElements",
+      "store/actions/notes",
+      "store/actions/notes",
+      "shared/types"
+    ],
+    "props": {
+      "id": "string",
+      "title": "string",
+      "bgImage": "string",
+      "onToggle": "(noteProperty: ToggleTool) => void",
+      "showPalette": "(() => void)",
+      "hidePalette": "(() => void)",
+      "deleteTodo": "() => void | undefined",
+      "setShowLabel": "(val: boolean) => void",
+      "onRemove": "(label: string) => void",
+      "isInputField": "boolean",
+      "isPinned": "boolean",
+      "editLabel": "boolean",
+      "notePin": "boolean",
+      "inputPin": "boolean",
+      "isLabel": "boolean",
+      "isChecked": "boolean",
+      "label": "string",
+      "newLabel": "string",
+      "clearInput": "() => void",
+      "onDelete": "(id: string) => void",
+      "onRemoveNoteLabel": "(id: string, label: string) => void"
+    },
+    "methods": {
+      "showMessage": "(message: string) => void",
+      "handleshowCheckbox": "() => void",
+      "handletoggleNotePin": "() => void",
+      "handleDeleteNote": "() => void",
+      "handleArchive": "() => void",
+      "handleUnarchive": "() => void",
+      "handleAddLabel": "() => void",
+      "handleCreateLabel": "() => void",
+      "handleRemoveLabel": "(label: any) => void",
+      "handleRenameLabel": "(label: any) => void",
+      "handleDeleteLabel": "(label: any) => void"
+    },
+    "contains": ["StyleProps"]
+  },
+  "App.tsx": {
+    "moduleImports": ["react-router-dom"],
+    "fileImports": [
+      "containers/Auth/Auth",
+      "pages/Home",
+      "components/Layout/Layout",
+      "components/UI/PageLoader/PageLoader",
+      "pages/ArchivedNote",
+      "fbase"
+    ],
+    "props": {},
+    "methods": {},
+    "contains": []
+  },
+
+  "shared/firebase.tsx": {
+    "moduleImports": ["firebase"],
+    "fileImports": ["types/Note", "fbase"],
+    "props": {},
+    "methods": {
+      "addLabelToStore": "(string) => Promise<void>",
+      "addLabelToNote": "(string, string) => Promise<void>",
+      "removeLabelFromNote": "(string, string) => Promise<void>",
+      "removeLabelFromStore": "(string) => Promise<void>",
+      "editLabelFromStore": "(string, string) => Promise<void>",
+      "addNoteToStore": "(Note) => Promise<void>",
+      "removeNoteFromStore": "(string) => Promise<void>",
+      "editNote": "(string, string, string) => Promise<void>",
+      "toggleNotePin": "(string, boolean) => Promise<void>",
+      "toggleNoteTodo": "(string, boolean) => Promise<void>",
+      "changeColor": "(string, string) => Promise<void>",
+      "changeNoteToArchives": "(string) => Promise<void>",
+      "changeArchivesToNotes": "(string) => Promise<void>"
+    }
+  },
+  "shared/utility.tsx": {
+    "moduleImports": [],
+    "fileImports": ["types/Note", "types/Todo"],
+    "props": {},
+    "methods": {
+      "updateObject": "(any, any) => any",
+      "updateAllLabels": "(Note[], string, string) => Note[]",
+      "convertNoteToTodo": "(string) => Todo[] | undefined",
+      "convertTodoToNote": "(Todo[] | undefined) => string | undefined",
+      "searchNote": "(string, Note[]) => Note[]",
+      "highlightText": "(string, string) => React.ReactNode",
+      "capitalizeFirstLetter": "(string) => string"
+    }
+  },
+
+  "shared/types.tsx": {
+    "moduleImports": [],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": [
+      "Dispatch<SetStateAction<S>>",
+      "string | number",
+      "string",
+      "Note",
+      "Todo",
+      "LabelObj"
+    ]
+  },
+
+  "shared/dnd.ts": {
+    "moduleImports": [],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": ["ItemTypes"]
+  },
+
+  "pages/LabelPage.tsx": {
+    "moduleImports": ["react-router-dom", "react-redux"],
+    "fileImports": [
+      "fbase",
+      "components/Notes/Notes",
+      "shared/utility",
+      "components/UI/NoMatching/NoMatching",
+      "store/reducers",
+      "shared/types"
+    ],
+    "props": {
+      "match": "RouteComponentProps<MatchParams>"
+    },
+    "methods": {},
+    "contains": []
+  },
+
+  "containers/Note/Note.tsx": {
+    "moduleImports": ["react-redux", "react-router-dom"],
+    "fileImports": [
+      "components/Note/Note",
+      "components/Note/NoteElements",
+      "components/Note/NoteLayout",
+      "components/ToDoList/ToDoList",
+      "shared/utility",
+      "shared/types",
+      "shared/firebase",
+      "store/actions/notes",
+      "store/reducers"
+    ],
+    "props": {
+      "note": "NoteProp"
+    },
+    "methods": {},
+    "contains": []
+  },
+
+  "containers/Note/NoteElements.tsx": {
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": [
+      "NoteContainer",
+      "NoteTitle",
+      "NoteContent",
+      "ToolbarContainer",
+      "Container"
+    ]
+  },
+
+  "containers/Note/NoteLayout.tsx": {
+    "moduleImports": [],
+    "fileImports": [
+      "containers/Toolbar/Toolbar",
+      "containers/Toolbar/Tool/Tool",
+      "containers/Label/Label",
+      "containers/Note/NoteElements",
+      "containers/Label/LabelElements/NoteLabel/NoteLabel",
+      "hooks/useClickOutside",
+      "shared/types"
+    ],
+    "props": {
+      "note": "Note",
+      "clicked": "number",
+      "isHovering": "boolean",
+      "onDelete": "(id: string) => void",
+      "setIsHovering": "Dispatcher<boolean>",
+      "onClick": "(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void",
+      "onClose": "(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void",
+      "children": "React.ReactNode"
+    },
+    "methods": {},
+    "contains": []
+  },
+
+  "containers/Toolbar/Tool/ToolElements.tsx": {
+    "moduleImports": ["styled-components"],
+    "fileImports": [],
+    "props": {
+      "bgImage": "string",
+      "notePin": "boolean",
+      "isPinned": "boolean",
+      "inputPin": "boolean",
+      "isLabel": "boolean",
+      "editLabel": "boolean"
+    },
+    "methods": {},
+    "contains": []
+  },
+
+  "store/actions/notes.tsx": {
+    "moduleImports": [],
+    "fileImports": ["shared/types"],
+    "props": {},
+    "methods": {},
+    "contains": [
+      "initNotes",
+      "initLabels",
+      "getEditableNote",
+      "clearEditableNote",
+      "removeLabel",
+      "renameLabel"
+    ]
+  },
+  "store/actions/view.ts": {
+    "moduleImports": [],
+    "fileImports": [],
+    "props": {},
+    "methods": {},
+    "contains": ["showFlashMessage", "hideFlashMessage", "getSearchQuery"]
+  }
+}
