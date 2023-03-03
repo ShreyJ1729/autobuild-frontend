@@ -49,7 +49,7 @@ const LandingPage2 = () => {
         obj
       )
       .then((res) => {
-        const mermaid_code = res.data;
+        const mermaid_code = res.data["mermaid"];
         console.log(102990123);
         console.log(mermaid_code);
         setData(mermaid_code);

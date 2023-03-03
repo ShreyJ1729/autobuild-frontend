@@ -15,7 +15,6 @@ import {
     GridItem
   } from "@chakra-ui/react";
 
-import Mermaid from "./Mermaid";
 import example from "./defaultMermaid";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import Chatbot from "./Chatbot.js";
@@ -47,20 +46,6 @@ const App = () => {
     ChatMessage-.->|props|ChatMessageProps;
   `);
 
-  // useEffect(() => {
-  //   // push new mermaid chart to content
-  //   content.push(<Mermaid chart={data["mermaid"]} />);
-  //   // setContent([...content, <Mermaid chart={data["mermaid"]} />]);
-  // }, [data]);
-
-  // useEffect(() => {
-  //   if (content.length > 2) {
-  //     console.log("mermaid content: ", content.length);
-  //     console.log("mermaid init");
-  //     initializeMermaid();
-  //   }
-  // }, [content]);
-
   return <>
     
     {/* Header */}
@@ -88,12 +73,11 @@ const App = () => {
 
     {/* Diagram */}
     <Preview code={data} />
-  
     
     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
         <GridItem w='100%' h='10' bg='black'>
             <CodeEditor
-                value={code}
+                value={data}
                 language="js"
                 placeholder=""
                 onChange={(evn) => setCode(evn.target.value)}
