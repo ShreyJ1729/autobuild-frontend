@@ -1,0 +1,8 @@
+<<|DESCRIPTION||>>
+A Typescript React app that allows users to create and delete notes.
+<<|OUTPUT|>>
+graph TD;App.tsx-->|renders|Header.tsxApp.tsx-->|renders|NoteList.tsx;App.tsx-->|renders|NoteForm.tsx;NoteList.tsx-->|renders|Note.tsx;Note.tsx-->|iteratively renders|DeleteNoteButton.tsx;NoteForm.tsx-->|renders|NoteInput.tsx;NoteInput.tsx-->|renders|NoteTitleInput.tsx;NoteInput.tsx-->|renders|NoteMessageInput.tsx;NoteForm.tsx-->|renders|NoteSubmitButton.tsx;App.tsx-->|useState|noteListState["noteListState:[{title:str,\nmessage:str,\nid:int}]"];NoteForm.tsx-->|useState|formState["formState:{title:str,\nmessage:str}"];NoteSubmitButton.tsx-->|calls|submit_note["submit_note(title:str,\nmessage:str,\nid:int)=>bool"];DeleteNoteButton.tsx-->|calls|delete_note["delete_note(id:int)=>bool"];NoteList.tsx-->|props|noteListProps["noteListState:[{title:str,\nmessage:str,\nid:int}]\nsetNoteListState:()=>void"];Note.tsx-->|props|noteProps["title:str\nmessage:str\nid:int\nsetNoteListState:()=>void"];NoteForm.tsx-->|props|noteFormProps["setNoteListState:()=>void"];NoteInput.tsx-->|props|noteInputProps["title:str\nmessage:str"];NoteTitleInput.tsx-->|props|noteTitleInputProps["title:str"];NoteMessageInput.tsx-->|props|noteMessageInputProps["message:str"];DeleteNoteButton.tsx-->|props|deleteNoteButtonProps["id:int\nsetNoteListState:()=>void"];NoteSubmitButton.tsx-->|props|setNoteListState["setNoteListState:()=>void"];
+<<|END|>>
+<<|DESCRIPTION||>>
+{{DESCRIPTION}}
+<<|OUTPUT|>>
