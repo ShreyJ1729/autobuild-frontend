@@ -50,7 +50,7 @@ mermaid.initialize({
       stroke: #f8f8f2;
       stroke-width: 1;
     }`,
-  fontFamily: "Fira Code"
+  fontFamily: "Fira Code",
 });
 
 export default class Mermaid extends React.Component {

@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const mermaiddata = atom({
+export const mermaidData = atom({
   key: "mermaid_data",
   default: "",
 });

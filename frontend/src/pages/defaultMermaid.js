@@ -1,6 +1,4 @@
-export default `
-
-
+const defaultMermaid = `
 graph TD;
 App-->|renders|ChatWindow;
 ChatWindow-->|renders|ChatHeader;
@@ -21,5 +19,6 @@ utils/socket.io-->|updatesmessages|messagesAtom;
 ChatBody-->|reads|messagesAtom;
 ChatHeader-.->|props|ChatHeaderProps;
 ChatMessage-.->|props|ChatMessageProps;
-
 `;
+
+export default defaultMermaid;

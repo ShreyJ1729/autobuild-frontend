@@ -1,40 +1,23 @@
 import * as React from "react";
 import { RecoilRoot, atom } from "recoil";
 import ReactDOM from "react-dom/client";
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-} from "react-router-dom";
-
-import LandingPage from './pages/LandingPage';
-import MainPage from './pages/MainPage';
-import About from './pages/About';
-import Pricing from './pages/Pricing';
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
-import LandingPage2 from './pages/LandingPage2';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MermaidEdit";
+import LandingPage2 from "./pages/Home";
 
 // 1. import `ChakraProvider` component
 import { Button, ChakraProvider } from "@chakra-ui/react";
-
 
 function App() {
   return (
     <RecoilRoot>
       <ChakraProvider>
-
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<LandingPage2/>}/>
-                <Route path="/app" element={<MainPage/>}/>
-                <Route path="/about" element={<About/>}/>
-                <Route path="/pricing" element={<Pricing/>}/>
-                <Route path="/signin" element={<Signin/>}/>
-                <Route path="/signup" element={<Signup/>}/>
-            </Routes>
+          <Routes>
+            <Route path="/" element={<LandingPage2 />} />
+            <Route path="/app" element={<MainPage />} />
+          </Routes>
         </BrowserRouter>
-
       </ChakraProvider>
     </RecoilRoot>
   );
