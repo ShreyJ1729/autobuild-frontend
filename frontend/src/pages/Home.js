@@ -5,35 +5,19 @@ import {
   Text,
   Button,
   Stack,
-  Icon,
   useColorModeValue,
-  createIcon,
 } from "@chakra-ui/react";
-
 import { Textarea } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-
 import {
   Flex,
-  IconButton,
-  Collapse,
   Link,
   Popover,
   PopoverTrigger,
-  PopoverContent,
   useBreakpointValue,
   useDisclosure,
-  Input,
 } from "@chakra-ui/react";
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from "@chakra-ui/icons";
-import Logo from "../Logo.png";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { RecoilRoot, atom, useRecoilState } from "recoil";
 import { mermaidData } from "../recoil/atoms.js";
