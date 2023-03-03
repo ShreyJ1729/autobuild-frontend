@@ -1,0 +1,215 @@
+<<|OUTPUT|>> count = 3
+
+<<|INPUT|>>
+A frontend application built using React in Typescript that is a single-room chat app that allows users to send messages to other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
+graph TD;
+%% UI components
+App["App.ts"]
+ChatWindow["ChatWindow.ts"]
+ChatHeader["ChatHeader.ts"]
+ChatBody["ChatBody.ts"]
+ChatInput["ChatInput.ts"]
+ChatMessage["ChatMessage.ts"]
+
+%% UI component connections
+App --> |renders|ChatWindow
+ChatWindow --> |renders|ChatHeader
+ChatWindow --> |renders|ChatBody
+ChatWindow --> |renders|ChatInput
+ChatBody --> |iteratively renders|ChatMessage
+
+%% UI component props
+ChatHeaderProps["roomName:string"]
+ChatMessageProps["author:string,\ntext:string,\ntimestamp:string"]
+
+%% UI component function definitions
+ChatInput-sendMessage["sendMessage"]
+
+%% UI component function connections
+ChatInput --> |calls|ChatInput-sendMessage
+
+%% utils/socket.io
+utils/socket.io[utils/socket.io.ts]
+socket["socket.io-client"]
+utils/socket.io -.-> |socket|socket
+
+%% utils/recoil
+utils/recoil[utils/recoil.ts]
+messagesAtom["[{id:string,\nauthor:string,\ntext:string,\ntimestamp:string},...]"]
+utils/recoil -.-> |messagesAtom|messagesAtom
+
+%% recoil function connections
+ChatInput-sendMessage --> |sends through socket|utils/socket.io
+utils/socket.io --> |updates messages|messagesAtom
+ChatBody --> |reads|messagesAtom
+
+%% UI component props connections
+ChatHeader -.-> |props|ChatHeaderProps
+ChatMessage -.-> |props|ChatMessageProps
+
+
+<<|OUTPUT|>>
+React frontend app in Typescript file and folder structure:
+src/
+├── index.tsx
+├── App.tsx
+├── components/
+│   ├── ChatWindow/
+│   │   └── ChatWindow.tsx
+│   ├── ChatHeader/
+│   │   └── ChatHeader.tsx
+│   ├── ChatBody/
+│   │   └── ChatBody.tsx
+│   ├── ChatInput/
+│   │   └── ChatInput.tsx
+│   ├── ChatMessage/
+│   │   └── ChatMessage.tsx
+├── utils/
+    ├── socket.io/
+    │   └── socket.io.ts
+    └── recoil/
+        └── recoil.ts
+
+Components and their descriptions:
+- App: The root component of the application. It renders the ChatWindow component and passes the AppProps as its props. It doesn't call any other component.
+    Props: roomName: string
+- ChatWindow: Renders the ChatHeader, ChatBody, and ChatInput components. It iteratively renders the ChatMessage component for each message in the messagesAtom. It receives the ChatWindowProps as its props.
+    Props: roomName: string
+- ChatHeader: Renders the name of the chat room. It receives the ChatHeaderProps as its props.
+    Props: roomName: string
+- ChatBody: Renders the messages in the chat room. It iteratively renders the ChatMessage component for each message in the messagesAtom.
+    Props: None
+- ChatInput: Renders the input box for sending a new message. It receives the ChatInputProps as its props and has a sendMessage function.
+    Props: sendMessage: (message: string) => void
+- ChatMessage: Renders a single message. It receives the ChatMessageProps as its props.
+    Props: author: string, text: string, timestamp: string
+
+Utils:
+- utils/socket.io: Contains the socket.io-client library for real-time communication. It exports the socket object.
+- utils/recoil: Contains the messagesAtom for state management with Recoil. It exports the messagesAtom object.
+
+
+<<|INPUT|>>
+A frontend application built using React in Typescript that allows users to create, edit, and delete notes. The app includes several components, such as a header, a note list, a note view, and a note form, as well as utility functions for managing notes using localStorage and a RESTful API. Users can add new notes, search for notes, view and edit existing notes, and delete notes they no longer need.
+graph TD;
+%% UI components
+App["App.js"]
+Header["Header.js"]
+NoteList["NoteList.js"]
+NoteListItem["NoteListItem.js"]
+NoteView["NoteView.js"]
+NoteForm["NoteForm.js"]
+
+%% UI component connections
+App --> |renders|Header
+App --> |renders|NoteList
+NoteList --> |iteratively renders|NoteListItem
+App --> |renders|NoteView
+NoteView --> |renders|NoteForm
+
+%% UI component props
+HeaderProps["addNote:function,\nsearchNotes:function"]
+NoteListProps["notes:array,\nselectedNoteId:string,\nselectNote:function"]
+NoteListItemProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\nisSelected:boolean,\nselectNote:function"]
+NoteViewProps["noteId:string,\ntitle:string,\ncontent:string,\nupdatedAt:string,\neditNote:function,\ndeleteNote:function"]
+NoteFormProps["noteId:string,\ntitle:string,\ncontent:string,\nsaveNote:function"]
+
+%% UI component function definitions
+Header-addNote["addNote"]
+Header-searchNotes["searchNotes"]
+NoteList-selectNote["selectNote"]
+NoteView-editNote["editNote"]
+NoteView-deleteNote["deleteNote"]
+NoteForm-saveNote["saveNote"]
+
+%% UI component function connections
+Header --> |calls|Header-addNote
+Header --> |calls|Header-searchNotes
+NoteList --> |calls|NoteList-selectNote
+NoteView --> |calls|NoteView-editNote
+NoteView --> |calls|NoteView-deleteNote
+NoteForm --> |calls|NoteForm-saveNote
+
+%% utils/localStorage
+utils/localStorage[utils/localStorage.js]
+notesKey["notes"]
+utils/localStorage -.-> |localStorage|localStorage
+
+%% utils/markdown
+utils/markdown[utils/markdown.js]
+convertMarkdown["convertMarkdown"]
+utils/markdown -.-> |markdown|marked
+
+%% utils/api
+utils/api[utils/api.js]
+getAllNotes["getAllNotes"]
+getNoteById["getNoteById"]
+createNote["createNote"]
+updateNote["updateNote"]
+deleteNote["deleteNote"]
+utils/api -.-> |axios|axios
+
+%% utils/api function connections
+getAllNotes --> |fetches notes from|utils/api
+getNoteById --> |fetches note from|utils/api
+createNote --> |creates note using|utils/api
+updateNote --> |updates note using|utils/api
+deleteNote --> |deletes note using|utils/api
+
+%% utils/localStorage function connections
+getAllNotes --> |saves notes to|utils/localStorage
+getNoteById --> |reads notes from|utils/localStorage
+createNote --> |saves notes to|utils/localStorage
+updateNote --> |saves notes to|utils/localStorage
+deleteNote --> |saves notes to|utils/localStorage
+
+%% UI component props connections
+Header -.-> |props|HeaderProps
+NoteList -.-> |props|NoteListProps
+NoteListItem -.-> |props|NoteListItemProps
+NoteView -.-> |props|NoteViewProps
+NoteForm -.-> |props|NoteFormProps
+
+
+<<|OUTPUT|>>
+React frontend app in Typescript file and folder structure:
+src/
+├── index.tsx
+├── App.tsx
+├── components/
+│   ├── Header/
+│   │   └── Header.tsx
+│   ├── NoteForm/
+│   │   └── NoteForm.tsx
+│   ├── NoteList/
+│   │   ├── NoteList.tsx
+│   │   └── NoteListItem/
+│   │       └── NoteListItem.tsx
+│   └── NoteView/
+│       └── NoteView.tsx
+└── utils/
+    ├── api/
+    │   └── api.ts
+    ├── localStorage/
+    │   └── localStorage.ts
+    └── markdown/
+        └── markdown.ts
+
+Components and their descriptions for the notes app:
+- App: The root component of the application. It renders the NotesList component and passes the AppProps as its props. It doesn't call any other component.
+    Props: None
+- NotesList: Renders the list of all notes in the application. It iteratively renders the NoteListItem component for each note in the notesAtom. It receives the NotesListProps as its props.
+    Props: None
+- NoteListItem: Renders a single note in the list. It receives the NoteListItemProps as its props and has a deleteNote function to remove the note.
+    Props: id: number, title: string, body: string, deleteNote: (id: number) => void
+- NoteDetail: Renders the details of a single note. It displays the title and body of the note and has an editNote function to update the note. It receives the NoteDetailProps as its props.
+    Props: id: number, title: string, body: string, editNote: (id: number, title: string, body: string) => void
+
+Utils:
+- utils/localStorage: Contains the localStorage object for persisting notes data. It exports the localStorage object.
+- utils/recoil: Contains the notesAtom for state management with Recoil. It exports the notesAtom object.
+
+<<|END|>>
+<<|DESCRIPTION|>>
+{{DESCRIPTION}}
+<<|OUTPUT|>>

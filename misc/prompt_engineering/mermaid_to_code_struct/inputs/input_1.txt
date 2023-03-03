@@ -1,0 +1,37 @@
+A frontend application built using React in Typescript that is a collaborative whiteboard app that allows users to draw on a canvas and share their drawings with other users on the website. Socket.io is used for real-time communication and recoil is used for state management.
+graph TD;
+
+%% UI components
+App["App.ts"]
+Canvas["Canvas.ts"]
+
+%% UI component connections
+App --> |renders|Canvas
+
+%% UI component props
+CanvasProps["canvasRef:Ref,\ndrawingMode:boolean,\nsetColor:function,\nsetLineWidth:function"]
+
+%% UI component function definitions
+Canvas-setColor["setColor"]
+Canvas-setLineWidth["setLineWidth"]
+
+%% UI component function connections
+Canvas --> |calls|Canvas-setColor
+Canvas --> |calls|Canvas-setLineWidth
+
+%% utils/socket.io
+utils/socket.io[utils/socket.io.ts]
+socket["socket.io-client"]
+utils/socket.io -.-> |socket|socket
+
+%% utils/recoil
+utils/recoil[utils/recoil.ts]
+linesAtom["[{id:string,\npoints:[{x:number,\ny:number}],\ncolor:string,\nlineWidth:number},...]"]
+utils/recoil -.-> |linesAtom|linesAtom
+
+%% recoil function connections
+utils/socket.io --> |updates linesAtom|linesAtom
+Canvas --> |reads and writes to|linesAtom
+
+%% UI component props connections
+Canvas -.-> |props|CanvasProps

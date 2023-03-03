@@ -1,0 +1,24 @@
+React frontend app in Typescript file and folder structure:
+```
+src/
+├── index.tsx
+├── App.tsx
+├── components/
+│   └── Canvas/
+│       └── Canvas.tsx
+└── utils/
+    ├── socket.io/
+    │   └── socket.io.ts
+    └── recoil/
+        └── recoil.ts
+```
+
+Components and their descriptions for the collaborative whiteboard app:
+- App: The root component of the application. It renders the Canvas component and passes the AppProps as its props. It doesn't call any other component.
+  Props: None
+- Canvas: Renders a canvas for drawing and handles user input for drawing on the canvas. It receives the CanvasProps as its props and has a setColor and setLineWidth function for updating drawing settings.
+  Props: canvasRef: RefObject<HTMLCanvasElement>, drawingMode: boolean, setColor: (color: string) => void, setLineWidth: (lineWidth: number) => void
+
+Utils:
+- utils/socket.io: Contains the socket.io-client library for real-time communication. It exports the socket object.
+- utils/recoil: Contains the linesAtom for state management with Recoil. It exports the linesAtom object.
