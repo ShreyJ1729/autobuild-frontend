@@ -26,27 +26,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const App = () => {
-  const [data, setData] = useRecoilState(mermaidData);
-  const [content, setContent] = useState([]);
-  const [code, setCode] = useState(defaultMermaid);
-  const [fileData2, setFileData] = useRecoilState(fileData);
-  const navigate = useNavigate(); // routing
+  const [fileData, setFileData] = useRecoilState();
 
-  const sendMermaidForCodeGen = () => {
+  const sendFilesForDownload = () => {
+
     const obj = {
-      mermaid: data,
+      dump: fileData,
     };
     axios.post(
-      "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-to-code",
+      "https://127.0.0.1:5000/api/setpages",
       obj
-    ).then((res) => {
-        const files = res.data["files"];
-        console.log("got response from file build");
-        console.log(files);
-        setData(files);
-      }).then(() => {
-        navigate(`/`);
-      });;
+    );
   };
 
   return (
@@ -72,39 +62,20 @@ const App = () => {
             <b>AutoBuild</b>
           </Text>
         </Flex>
-        <IconButton
+      </Flex>
+
+      <IconButton
           icon={<ArrowForwardIcon />}
           aria-label="Right arrow"
           size="md"
           colorScheme="blue"
           onClick={() => {
-            sendMermaidForCodeGen();
+            sendFilesForDownload();
           }}
         />
-      </Flex>
-      {/* Diagram */}
-      <Preview code={data} />
-      <br />
-      <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-        <GridItem w="100%" h="10" bg="black">
-          <CodeEditor
-            value={data}
-            language="js"
-            placeholder=""
-            onChange={(evn) => setData(evn.target.value)}
-            padding={15}
-            style={{
-              fontSize: 12,
-              backgroundColor: "#000000",
-              fontFamily:
-                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-            }}
-          />
-        </GridItem>
-        <GridItem w="100%" h="10" bg="black">
-          <Chatbot />
-        </GridItem>
-      </Grid>
+
+      <p>DONE</p>
+
     </>
   );
 };
