@@ -22,12 +22,14 @@ import { useNavigate } from "react-router-dom";
 import { RecoilRoot, atom, useRecoilState } from "recoil";
 import { mermaidData } from "../recoil/atoms.js";
 import bg from "../abstract.jpg";
+import { idea } from "../recoil/atoms.js";
 
 const LandingPage2 = () => {
   const navigate = useNavigate(); // routing
   const { isOpen, onToggle } = useDisclosure(); // menu
   const [data, setData] = useRecoilState(mermaidData); // requested mermaid data
   const [input, setInput] = useState(""); // input box state
+  const [dataIdea, setIdea] = useState(idea);
 
   // css vars
   const linkColor = useColorModeValue("white.900", "white.900");
@@ -55,6 +57,8 @@ const LandingPage2 = () => {
       .then(() => {
         // navigate(`/app`);
       });
+
+      setIdea(input);
 
     // go to mermaid edit page
     navigate(`/app`);
