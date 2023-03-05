@@ -98,10 +98,4 @@ const NavBar = () => {
     );
 };
 
-NavBar.propTypes = {
-    onSidebarOpen: PropTypes.func,
-    pages: PropTypes.object,
-    colorInvert: PropTypes.bool,
-};
-
 export default NavBar;
