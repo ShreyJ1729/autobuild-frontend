@@ -57,7 +57,7 @@ def build_message_list(variables, prompt_path, prompt_instructions):
 
 
 def component_gen(name, description, component_name):
-    print("navbar-gen request received: ", name, description, component_name)
+    # print("navbar-gen request received: ", name, description, component_name)
 
     load_openai_key()
     messageList = build_message_list(
@@ -67,7 +67,7 @@ def component_gen(name, description, component_name):
             "COMPONENT": component_name,
         },
         prompt_path="./landingpage_prompts/format.txt",
-        prompt_instructions="You are a helpful React Typescript navbar generation bot. Given a startup idea, you generate the code for the website navbar using React Typescript and material-ui. Stop token: <<|END|>>",
+        prompt_instructions="You are a helpful React.js navbar generation bot. Given a startup idea, you generate the code for the website navbar using React and material-ui. Stop token: <<|END|>>",
     )
 
     completion = openai.ChatCompletion.create(
@@ -76,8 +76,8 @@ def component_gen(name, description, component_name):
 
     code = completion.choices[0].message.content.rstrip("<<|END|>>")
 
-    print(code)
-    return {"code": code}
+    # print(code)
+    return code
 
 
 def build_prompt(variables, prompt_path):
@@ -97,5 +97,7 @@ if __name__ == "__main__":
         "component_name": "NavBar",
     }
     code = component_gen(req["name"], req["description"], req["component_name"])
-    print("got response")
-    print(component_gen)
+    print(
+        code,
+        file=open("/Users/shreyjoshi/dev/autobuild/landingpage/src/NavBar.jsx", "w+"),
+    )
