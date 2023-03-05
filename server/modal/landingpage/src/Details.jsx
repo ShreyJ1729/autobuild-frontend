@@ -1,122 +1,122 @@
-import React from 'react'
-import {
-    Box,
-    Grid,
-    Typography,
-    Button,
-    TextField,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}))
+const menuItems = [
+  {
+    id: 1,
+    text: 'Database',
+    link: '#database',
+  },
+  {
+    id: 2,
+    text: 'Authentication',
+    link: '#authentication',
+  },
+  {
+    id: 3,
+    text: 'API',
+    link: '#api',
+  },
+  {
+    id: 4,
+    text: 'Functions',
+    link: '#functions',
+  },
+  {
+    id: 5,
+    text: 'Subscriptions',
+    link: '#subscriptions',
+  },
+  {
+    id: 6,
+    text: 'Storage',
+    link: '#storage',
+  },
+];
+
+const MenuWrapper = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'block',
+  },
+}));
+
+const MenuItemsWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
 
 const Details = () => {
+  const [open, setOpen] = React.useState(false);
 
-    const [purpose, setPurpose] = React.useState('Developing');
-    const handleChange = (event) => {
-        setPurpose(event.target.value);
-    };
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
 
-    const classes = useStyles();
+    setOpen(open);
+  };
 
-    return (
-        <Box
-            component='section'
-            sx={{
-                py: 10,
-                px: 2,
-                bgcolor: '#f4f6f8',
-            }}>
-            <Grid container>
-                <Grid item lg={6}>
-                    <h4>Supabase - The open source Firebase alternative</h4>
-                    <p>
-                        Supabase offers developers a full Postgres database, authentication,
-                        instant APIs, edge functions, realtime subscriptions, and storage to help
-                        build their projects quickly and with a focus on their products.
-                    </p>
-                    <Typography variant='subtitle1' fontWeight='500'>
-                        What is your purpose for using supabase?
-                    </Typography>
-                    <FormControl
-                        variant="outlined"
-                        fullWidth
-                        className={classes.formControl}
-                        margin='dense'>
-                        <InputLabel id="purpose">I’m using it for</InputLabel>
-                        <Select
-                            labelId="purpose"
-                            id="purpose-select"
-                            value={purpose}
-                            onChange={handleChange}
-                            label="I’m using it for"
-                        >
-                            <MenuItem value='Developing'>Developing</MenuItem>
-                            <MenuItem value='Testing'>Testing</MenuItem>
-                            <MenuItem value='Production'>Production</MenuItem>
-                            <MenuItem value='Monitoring'>Monitoring</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item lg={6}>
-                    <Box
-                        component='form'
-                        sx={{
-                            width: '80%',
-                            margin: '2rem auto'
-                        }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="name"
-                            label="Your name"
-                            type="text"
-                            id="name"
-                            autoComplete="name"
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="email"
-                        />
-                        <Button
-                            variant='contained'
-                            fullWidth
-                            sx={{
-                                mt: 3,
-                                mb: 2,
-                                borderRadius: 0,
-                                fontSize: '0.9rem',
-                                textTransform: 'capitalize',
-                                py: 2,
-                                backgroundColor: '#20cce5',
-                                "&:hover": {
-                                    backgroundColor: '#1a8c9a',
-                                }
-                            }}>
-                            sign up for updates
-                        </Button>
-                    </Box>
-                </Grid>
-            </Grid>
-        </Box>
-    )
-}
+  return (
+    <React.Fragment>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Supabase
+            </Typography>
+            <Button color="inherit" href="#contact">
+              Contact
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
+        <MenuWrapper>
+          <List>
+            {menuItems.map((item) => (
+              <ListItem button key={item.id} onClick={toggleDrawer(false)}>
+                <ListItemText primary={item.text} href={item.link} />
+              </ListItem>
+            ))}
+          </List>
+        </MenuWrapper>
+      </Drawer>
+      <MenuItemsWrapper>
+        <List sx={{ display: 'flex' }}>
+          {menuItems.map((item) => (
+            <Button key={item.id} href={item.link} color="inherit">
+              {item.text}
+            </Button>
+          ))}
+        </List>
+      </MenuItemsWrapper>
+    </React.Fragment>
+  );
+};
 
 export default Details;

@@ -1,12 +1,22 @@
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import Details from "./Details";
+import Hero from "./Hero";
+import Testimonial from "./Testimonial";
+import Waitlist from "./Waitlist";
+import FAQ from "./FAQ";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <NavBar />
+      <Hero />
       <Details />
-    </div>
+      <Testimonial />
+      <Waitlist />
+      <FAQ />
+      <Footer />
+    </>
   );
 }
 

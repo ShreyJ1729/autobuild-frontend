@@ -77,7 +77,15 @@ if __name__ == "__main__":
         "description": "an open source Firebase alternative. It offers developers a full Postgres database, authentication, instant APIs, edge functions, realtime subscriptions, and storage to help build their projects quickly and with a focus on their products.",
     }
 
-    component_list = ["NavBar", "Hero", "Details", "Features", "Pricing", "Footer"]
+    component_list = [
+        "NavBar",
+        "Hero",
+        "Details",
+        "Testimonial",
+        "Waitlist",
+        "FAQ",
+        "Footer",
+    ]
 
     landingpage_code = {}
 
@@ -91,6 +99,8 @@ if __name__ == "__main__":
             print(e)
 
     # take all the generated code and write to files under landingpage/src
+    if not os.path.exists("./landingpage/src"):
+        os.system("npx create-react-app landingpage")
     for component in landingpage_code:
         code = landingpage_code[component]
         print(f"Writing {component} component to file")
