@@ -15,23 +15,6 @@ def build_message_list(variables, prompt_path, prompt_instructions):
     for key in variables:
         prompt = prompt.replace(f"{{{{{key}}}}}", variables[key])
 
-    # based on component type, get list of prompts
-    inputs = []
-    outputs = []
-    for i in range(
-        1, len(os.listdir(f"./landingpage_prompts/{variables['COMPONENT']}")) // 2 + 1
-    ):
-        inputs.append(
-            open(
-                f"./landingpage_prompts/{variables['COMPONENT']}/input{i}.txt", "r"
-            ).read()
-        )
-        outputs.append(
-            open(
-                f"./landingpage_prompts/{variables['COMPONENT']}/output{i}.txt", "r"
-            ).read()
-        )
-
     # build and return messageList
     messageList = [
         {
@@ -39,17 +22,26 @@ def build_message_list(variables, prompt_path, prompt_instructions):
             "content": prompt_instructions,
         },
     ]
-    for i in range(len(inputs)):
+
+    iterlen = (
+        len(os.listdir(f"./landingpage_prompts/{variables['COMPONENT']}")) // 2 + 1
+    )
+
+    for i in range(1, iterlen):
         messageList.append(
             {
                 "role": "user",
-                "content": inputs[i],
+                "content": open(
+                    f"./landingpage_prompts/{variables['COMPONENT']}/input{i}.txt", "r"
+                ).read(),
             }
         )
         messageList.append(
             {
                 "role": "assistant",
-                "content": outputs[i],
+                "content": open(
+                    f"./landingpage_prompts/{variables['COMPONENT']}/output{i}.txt", "r"
+                ).read(),
             }
         )
     messageList.append({"role": "user", "content": prompt})
@@ -57,7 +49,7 @@ def build_message_list(variables, prompt_path, prompt_instructions):
 
 
 def component_gen(name, description, component_name):
-    # print("navbar-gen request received: ", name, description, component_name)
+    print("component-gen request received: ", component_name)
 
     load_openai_key()
     messageList = build_message_list(
@@ -76,28 +68,32 @@ def component_gen(name, description, component_name):
 
     code = completion.choices[0].message.content.rstrip("<<|END|>>")
 
-    # print(code)
     return code
-
-
-def build_prompt(variables, prompt_path):
-    prompt = open(prompt_path, "r").read()
-
-    # replace variables in prompt
-    for key in variables:
-        prompt = prompt.replace(f"{{{{{key}}}}}", variables[key])
-
-    return prompt
 
 
 if __name__ == "__main__":
     req = {
         "name": "Supabase",
         "description": "an open source Firebase alternative. It offers developers a full Postgres database, authentication, instant APIs, edge functions, realtime subscriptions, and storage to help build their projects quickly and with a focus on their products.",
-        "component_name": "NavBar",
     }
-    code = component_gen(req["name"], req["description"], req["component_name"])
-    print(
-        code,
-        file=open("/Users/shreyjoshi/dev/autobuild/landingpage/src/NavBar.jsx", "w+"),
-    )
+
+    component_list = ["NavBar", "Hero", "Details", "Features", "Pricing", "Footer"]
+
+    landingpage_code = {}
+
+    for component in component_list:
+        try:
+            landingpage_code[component] = component_gen(
+                req["name"], req["description"], component
+            )
+        except Exception as e:
+            print(f"Failed to generate {component} component")
+            print(e)
+
+    # take all the generated code and write to files under landingpage/src
+    for component in landingpage_code:
+        code = landingpage_code[component]
+        print(f"Writing {component} component to file")
+        print(code, file=open(f"./landingpage/src/{component}.jsx", "w+"))
+
+    # Build App.jsx component from other components
