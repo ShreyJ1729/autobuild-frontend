@@ -1,1 +1,1 @@
-Build me the {{COMPONENT}} component for the website for {{IDEA}} which is {{DESCRIPTION}}.
+Build me the {{COMPONENT}} component for the website for {{NAME}} which is {{DESCRIPTION}}.
