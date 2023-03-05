@@ -220,6 +220,14 @@ const LandingPage2 = () => {
           </Stack>
         </Stack>
       </Container>
+      <iframe
+        title="AutoBuild"
+        style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }}
+        width="800"
+        height="450"
+        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FfzVp6TIge9H1UJNFpdjuEh%2FAutoBuild%3Fnode-id%3D0%253A1%26t%3DhOLl3U7OAnQBQGM0-1"
+        allowfullscreen
+      ></iframe>
     </>
   );
 };

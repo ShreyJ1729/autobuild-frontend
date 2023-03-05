@@ -33,7 +33,7 @@ def build_message_list(variables, prompt_path, prompt_instructions):
     # build and return messageList
     return [
         {
-            "role": "user",
+            "role": "system",
             "content": prompt_instructions,
         },
         {
@@ -117,7 +117,12 @@ def component_list_gen(mermaid: str):
         model="gpt-3.5-turbo", messages=messageList
     )
 
-    component_list = completion.choices[0].message.content.rstrip("<<|END|>>")
+    component_list = (
+        completion.choices[0]
+        .message.content.rstrip("<<|END|>>")
+        .rstrip("\n")
+        .rstrip(" ")
+    )
 
     print(component_list)
     return {"component_list": component_list}
@@ -135,19 +140,25 @@ def build_prompt(variables, prompt_path):
 
 class MermaidToCodeRequest(BaseModel):
     mermaid: str
+    description: str
 
 
 @app.post("/mermaid-to-code")
 async def mermaid_to_code(data: MermaidToCodeRequest):
-    print("mermaid-to-code request received: ", data.mermaid)
+    # print("mermaid-to-code request received: ", data.description, data.mermaid)
     load_openai_key()
 
     traversalList = component_list_gen(data.mermaid)
     traversalList = traversalList["component_list"]
-    # convert string of list into list
-    traversalList = traversalList[1:-1].split(",")
+    traversalList = traversalList.lstrip("[").rstrip("]")
 
-    print("traversalList: ", traversalList)
+    # print("traversalList String: <<", traversalList, ">>")
+    # convert string of list into list
+    traversalList = traversalList.split(",")
+
+    # print("traversalList: ", traversalList)
+
+    all_code = {}
 
     for component in traversalList:
         print(component)
@@ -157,7 +168,7 @@ async def mermaid_to_code(data: MermaidToCodeRequest):
                 "FILENAME": component,
             },
             prompt_path="/root/prompts/mermaid_to_code.txt",
-            prompt_instructions="You are a helpful Typescript React code generation bot that takes in a filename and markdown mermaid diagram architecting a React app and you return the code for that file and ONLY that file. You do not import from any file or module that is not specified in the user-provided mermaid diagram. You import children component of a file that are shown in the markdown mermaid diagram. You always define a component's prop types in the same file as the component using the PropTypes module. You use tailwind css and create stunning, modern and sleek UI designs. Stop token: <<|END|>>",
+            prompt_instructions="You are a helpful Typescript React code generation bot that takes in a Typescript React App description, a filename and markdown mermaid diagram architecting the React app and you return the code for that file and ONLY that file. You do not import from any file or module that is not specified in the user-provided mermaid diagram. You import children component of a file that are shown in the markdown mermaid diagram. You always define a component's prop types in the same file as the component using the PropTypes module. You use tailwind css and create stunning, modern and sleek UI designs. Stop token: <<|END|>>",
         )
 
         print(messageList)
@@ -167,12 +178,15 @@ async def mermaid_to_code(data: MermaidToCodeRequest):
         )
 
         tsx_code = completion.choices[0].message.content.rstrip("<<|END|>>")
+        all_code[component] = tsx_code
 
         print("--------------------")
         print(component)
         print("```tsx")
         print(tsx_code)
         print("```")
+
+    return {"all_code": all_code}
 
 
 @stub.asgi(mounts=[modal.Mount.from_local_dir("./", remote_path="/root/")])
