@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AutoBuld",
+  "name": "Fully Autonomous Code Generation",
   "icons": [
     {
       "src": "favicon.ico",
