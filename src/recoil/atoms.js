@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import defaultMermaid from "../pages/defaultMermaid";
+import defaultMermaid from "../pages/MermaidEdit/components/defaultMermaid";
 
 export const mermaidData = atom({
   key: "mermaid_data",
@@ -8,10 +8,10 @@ export const mermaidData = atom({
 
 export const fileData = atom({
   key: "file_data",
-  default: {"path/filename": "filestr"},
+  default: { "path/filename": "filestr" },
 });
 
 export const idea = atom({
-    key: 'idea',
-    default: ""
+  key: "idea",
+  default: "",
 });

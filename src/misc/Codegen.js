@@ -17,11 +17,11 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
-import example from "./defaultMermaid";
+import example from "../pages/MermaidEdit/components/defaultMermaid";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import Chatbot from "./Chatbot.js";
-import Preview from "./MermaidPreview.js";
-import defaultMermaid from "./defaultMermaid";
+import Chatbot from "../pages/MermaidEdit/components/Chatbot.jsx";
+import Preview from "../pages/MermaidEdit/MermaidPreview.js";
+import defaultMermaid from "../pages/MermaidEdit/components/defaultMermaid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -29,14 +29,10 @@ const Codegen = () => {
   const [fileData2, setFileData] = useRecoilState(fileData);
 
   const sendFilesForDownload = () => {
-
     const obj = {
       dump: fileData,
     };
-    axios.post(
-      "https://127.0.0.1:5000/api/setpages",
-      obj
-    );
+    axios.post("https://127.0.0.1:5000/api/setpages", obj);
   };
 
   return (
@@ -65,17 +61,16 @@ const Codegen = () => {
       </Flex>
 
       <IconButton
-          icon={<ArrowForwardIcon />}
-          aria-label="Right arrow"
-          size="md"
-          colorScheme="blue"
-          onClick={() => {
-            sendFilesForDownload();
-          }}
-        />
+        icon={<ArrowForwardIcon />}
+        aria-label="Right arrow"
+        size="md"
+        colorScheme="blue"
+        onClick={() => {
+          sendFilesForDownload();
+        }}
+      />
 
       <p>DONE</p>
-
     </>
   );
 };

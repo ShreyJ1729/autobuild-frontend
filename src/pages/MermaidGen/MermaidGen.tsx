@@ -20,24 +20,20 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { RecoilRoot, atom, useRecoilState } from "recoil";
-import { mermaidData } from "../recoil/atoms.js";
+import { mermaidData } from "../../recoil/atoms.js";
 import bg from "../abstract.jpg";
-import { idea } from "../recoil/atoms.js";
+import { idea } from "../../recoil/atoms.js";
 
-const LandingPage2 = () => {
+const Home = () => {
   const navigate = useNavigate(); // routing
   const { isOpen, onToggle } = useDisclosure(); // menu
   const [data, setData] = useRecoilState(mermaidData); // requested mermaid data
   const [input, setInput] = useState(""); // input box state
-  const [dataIdea, setIdea] = useState(idea);
-
-  // css vars
-  const linkColor = useColorModeValue("white.900", "white.900");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
-  const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const [dataIdea, setIdea] = useRecoilState(idea);
 
   // send inp to backend
-  function sendInput(e) {
+  // this is from a button onclick so the type is
+  function sendInput(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     console.log("sending input");
 
     // format
@@ -53,15 +49,12 @@ const LandingPage2 = () => {
       .then((res) => {
         const mermaid_code = res.data["mermaid"];
         setData(mermaid_code);
-      })
-      .then(() => {
-        // navigate(`/app`);
       });
 
-      setIdea(input);
+    setIdea(input);
 
     // go to mermaid edit page
-    navigate(`/app`);
+    navigate(`/mermaid-edit`);
   }
 
   return (
@@ -182,7 +175,7 @@ const LandingPage2 = () => {
             </Text>
           </Heading>
           <Text color={"gray.500"}>
-            Get started by giving a description of your program in the box
+            Get started by giving a description of your web app in the box
             below...
           </Text>
           <Stack
@@ -220,17 +213,9 @@ const LandingPage2 = () => {
           </Stack>
         </Stack>
       </Container>
-      <iframe
-        title="AutoBuild"
-        style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }}
-        width="800"
-        height="450"
-        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FfzVp6TIge9H1UJNFpdjuEh%2FAutoBuild%3Fnode-id%3D0%253A1%26t%3DhOLl3U7OAnQBQGM0-1"
-        allowfullscreen
-      ></iframe>
     </>
   );
 };
 
 // export
-export default LandingPage2;
+export default Home;

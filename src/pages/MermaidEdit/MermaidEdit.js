@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { mermaidData, fileData, idea } from "../recoil/atoms.js";
+import { mermaidData, fileData, idea } from "../../recoil/atoms";
 import {
   Box,
   Text,
@@ -17,15 +17,14 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
-import example from "./defaultMermaid";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import Chatbot from "./Chatbot.js";
-import Preview from "./MermaidPreview.js";
-import defaultMermaid from "./defaultMermaid";
+import Chatbot from "./components/Chatbot";
+import Preview from "./components/MermaidPreview";
+import defaultMermaid from "./components/defaultMermaid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const App = () => {
+const MermaidEdit = () => {
   const [data, setData] = useRecoilState(mermaidData);
   const [content, setContent] = useState([]);
   const [code, setCode] = useState(defaultMermaid);
@@ -34,22 +33,25 @@ const App = () => {
   const [userIdea, setIdea] = useRecoilState(idea);
 
   const sendMermaidForCodeGen = () => {
-    console.log('sending code req');
+    console.log("sending code req");
     const obj = {
       mermaid: data,
-      description: userIdea
+      description: userIdea,
     };
-    axios.post(
-      "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-to-code",
-      obj
-    ).then((res) => {
+    axios
+      .post(
+        "https://shreyj1729--autobuild-fastapi-app.modal.run/mermaid-to-code",
+        obj
+      )
+      .then((res) => {
         const files = res.data["files"];
         console.log("got response from file build");
         console.log(files);
         setData(files);
-      }).then(() => {
+      })
+      .then(() => {
         navigate(`/codegen`);
-      });;
+      });
   };
 
   return (
@@ -112,4 +114,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default MermaidEdit;

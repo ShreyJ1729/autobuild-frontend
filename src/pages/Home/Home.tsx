@@ -1,4 +1,3 @@
-import React from "react";
 import {
     Box,
     Input,
@@ -12,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
-const Homepage = () => {
+const Home = () => {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
@@ -29,10 +28,10 @@ const Homepage = () => {
                 </Stack>
             </Flex>
             <Box mt={8}>
-                <Input size="lg" placeholder="What do you want to build?" />
+                <Input size="lg" color="#ADD8E6" placeholder="Build me a landing page for..." borderColor={'gray.500'} _placeholder={{ color: 'gray.500' }} />
             </Box>
         </Box>
     );
 }
 
-export default Homepage;
+export default Home;

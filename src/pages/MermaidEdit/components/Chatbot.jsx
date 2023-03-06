@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./ChatbotStyles.css";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { mermaidData } from "../recoil/atoms.js";
+import { mermaidData } from "../../../recoil/atoms.js";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
