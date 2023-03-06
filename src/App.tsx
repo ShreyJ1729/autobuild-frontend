@@ -7,11 +7,13 @@ import Home from "./pages/Home/Home";
 import LandingPageBuilder from "./pages/LandingPageBuilder/LandingPageBuilder";
 import MermaidGen from "./pages/MermaidGen/MermaidGen";
 import MermaidEdit from "./pages/MermaidEdit/MermaidEdit";
+import { ColorModeScript } from "@chakra-ui/react";
 
 function App() {
   return (
     <>
       <RecoilRoot>
+        <ColorModeScript initialColorMode="dark" />
         <ChakraProvider theme={theme}>
           <BrowserRouter>
             <Routes>
