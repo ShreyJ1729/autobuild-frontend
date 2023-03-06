@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { mermaidData, fileData, idea } from "../../recoil/atoms";
+import { mermaidData, fileData, idea } from "recoil/atoms";
 import {
   Box,
   Text,
