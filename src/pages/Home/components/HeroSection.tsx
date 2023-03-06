@@ -32,7 +32,7 @@ export const HeroSection: FunctionComponent<HeroSectionProps> = () => {
                             </Text>
 
                             <VStack align="center" mt={20}>
-                                <Text mt={2} fontSize="md" color="brand.500" fontWeight="bold">
+                                <Text mt={2} fontSize="md" color="white" fontWeight="bold">
                                     Sign up for our waitlist
                                 </Text>
 
