@@ -70,7 +70,7 @@ const KeyFeaturesQuestion = ({ keyFeatures, setKeyFeatures, handleDescriptionSub
                                 <HStack>
                                     <EditableControls index={index} deleteKeyFeature={deleteKeyFeature} />
                                     <EditablePreview px={3} py={2} borderWidth={1} />
-                                    <EditableInput />
+                                    <EditableInput minW="3xl" />
                                 </HStack>
                             </Editable>
                         </HStack>

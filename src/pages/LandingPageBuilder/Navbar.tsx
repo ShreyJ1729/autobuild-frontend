@@ -30,7 +30,7 @@ import { NavItem } from "./constants"
 
 interface NavbarProps {
     navItems: Array<NavItem>
-    stepNumber: number
+    stepNumber: number,
 }
 
 export default function Navbar({ navItems, stepNumber }: NavbarProps) {
@@ -56,7 +56,8 @@ export default function Navbar({ navItems, stepNumber }: NavbarProps) {
                 borderBottom={1}
                 borderStyle={'solid'}
                 borderColor={useColorModeValue('gray.200', 'gray.900')}
-                align={'center'}>
+                align={'center'}
+                zIndex={1000}>
                 <Flex
                     flex={{ base: 1, md: 'auto' }}
                     ml={{ base: -2 }}

@@ -1,125 +1,138 @@
-import { Box, Flex, HStack, IconButton, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react';
-import { FaFacebook, FaGithub, FaGooglePlay, FaInstagram, FaTwitter, FaApple } from 'react-icons/fa';
+import {
+    Box,
+    chakra,
+    Container,
+    Link,
+    SimpleGrid,
+    Stack,
+    Text,
+    VisuallyHidden,
+    Input,
+    IconButton,
+    useColorModeValue,
+} from '@chakra-ui/react';
+import { ReactNode } from 'react';
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { BiMailSend } from 'react-icons/bi';
 
-export default function LargeFooterWithSocialAndAppLinks() {
+const Logo = (props: any) => {
     return (
-        <Box bg={useColorModeValue('gray.50', 'gray.900')} color={useColorModeValue('gray.700', 'gray.200')}>
-            <Box
-                px={{ base: 4, md: 8 }}
-                py={16}
-                mx="auto"
-                maxW="7xl"
-                direction={{ base: 'column', lg: 'row' }}>
-                <Stack spacing={6} mx={{ lg: '8' }} my={{ base: 8, lg: 0 }}>
-                    <Box>
-                        <Text fontWeight="bold" fontSize="xl" mb="2">
-                            About Us
+        <img
+            src="https://img.logoipsum.com/287.svg"
+            height={32}
+            viewBox="0 0 120 28"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props} />
+    );
+};
+
+const SocialButton = ({
+    children,
+    label,
+    href,
+}: {
+    children: ReactNode;
+    label: string;
+    href: string;
+}) => {
+    return (
+        <chakra.button
+            bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+            rounded={'full'}
+            w={8}
+            h={8}
+            cursor={'pointer'}
+            as={'a'}
+            href={href}
+            display={'inline-flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            transition={'background 0.3s ease'}
+            _hover={{
+                bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+            }}>
+            <VisuallyHidden>{label}</VisuallyHidden>
+            {children}
+        </chakra.button>
+    );
+};
+
+const ListHeader = ({ children }: { children: ReactNode }) => {
+    return (
+        <Text fontWeight={'500'} fontSize={'lg'} mb={2}>
+            {children}
+        </Text>
+    );
+};
+
+export default function LargeWithNewsletter() {
+    return (
+        <Box
+            bg={useColorModeValue('gray.50', 'gray.900')}
+            color={useColorModeValue('gray.700', 'gray.200')}>
+            <Container as={Stack} maxW={'6xl'} py={10}>
+                <SimpleGrid
+                    templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
+                    spacing={8}>
+                    <Stack spacing={6}>
+                        <Box>
+                            <Logo color={useColorModeValue('gray.700', 'white')} />
+                        </Box>
+                        <Text fontSize={'sm'}>
+                            © 2022 Chakra Templates. All rights reserved
                         </Text>
-                        <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut dolor eget enim accumsan posuere vel vel
-                            enim.
-                        </Text>
-                    </Box>
-                    <Stack direction="row" spacing={4}>
-                        <Link href="#" fontSize="xl">
-                            <FaFacebook />
-                        </Link>
-                        <Link href="#" fontSize="xl">
-                            <FaTwitter />
-                        </Link>
-                        <Link href="#" fontSize="xl">
-                            <FaInstagram />
-                        </Link>
-                        <Link href="#" fontSize="xl">
-                            <FaGithub />
-                        </Link>
+                        <Stack direction={'row'} spacing={6}>
+                            <SocialButton label={'Twitter'} href={'#'}>
+                                <FaTwitter />
+                            </SocialButton>
+                            <SocialButton label={'YouTube'} href={'#'}>
+                                <FaYoutube />
+                            </SocialButton>
+                            <SocialButton label={'Instagram'} href={'#'}>
+                                <FaInstagram />
+                            </SocialButton>
+                        </Stack>
                     </Stack>
-                </Stack>
-                <Flex flexWrap="wrap" direction={{ base: 'column', md: 'row' }} justify="space-between">
-                    <Box>
-                        <Text fontWeight="bold" fontSize="xl" mb="2">
-                            Company
-                        </Text>
-                        <Stack as="ul" spacing={2} color={useColorModeValue('gray.600', 'gray.400')}>
-                            <Link href="#">About Us</Link>
-                            <Link href="#">Careers</Link>
-                            <Link href="#">Contact Us</Link>
-                            <Link href="#">Support</Link>
-                            <Link href="#">Privacy Policy</Link>
-                            <Link href="#">Terms of Service</Link>
+                    <Stack align={'flex-start'}>
+                        <ListHeader>Company</ListHeader>
+                        <Link href={'#'}>About us</Link>
+                        <Link href={'#'}>Blog</Link>
+                        <Link href={'#'}>Contact us</Link>
+                        <Link href={'#'}>Pricing</Link>
+                        <Link href={'#'}>Testimonials</Link>
+                    </Stack>
+                    <Stack align={'flex-start'}>
+                        <ListHeader>Support</ListHeader>
+                        <Link href={'#'}>Help Center</Link>
+                        <Link href={'#'}>Terms of Service</Link>
+                        <Link href={'#'}>Legal</Link>
+                        <Link href={'#'}>Privacy Policy</Link>
+                        <Link href={'#'}>Satus</Link>
+                    </Stack>
+                    <Stack align={'flex-start'}>
+                        <ListHeader>Stay up to date</ListHeader>
+                        <Stack direction={'row'}>
+                            <Input
+                                placeholder={'Your email address'}
+                                bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+                                border={0}
+                                _focus={{
+                                    bg: 'whiteAlpha.300',
+                                }}
+                            />
+                            <IconButton
+                                bg={useColorModeValue('green.400', 'green.800')}
+                                color={useColorModeValue('white', 'gray.800')}
+                                _hover={{
+                                    bg: 'green.600',
+                                }}
+                                aria-label="Subscribe"
+                                icon={<BiMailSend />}
+                            />
                         </Stack>
-                    </Box>
-                    <Box>
-                        <Text fontWeight="bold" fontSize="xl" mb="2">
-                            Links
-                        </Text>
-                        <Stack as="ul" spacing={2} color={useColorModeValue('gray.600', 'gray.400')}>
-                            <Link href="#">Home</Link>
-                            <Link href="#">Blog</Link>
-                            <Link href="#">Pricing</Link>
-                            <Link href="#">Documentation</Link>
-                            <Link href="#">Our Work</Link>
-                        </Stack>
-                    </Box>
-                    <Box>
-                        <Text fontWeight="bold" fontSize="xl" mb="2">
-                            Download
-                        </Text>
-                        <Stack as="ul" spacing={2} color={useColorModeValue('gray.600', 'gray.400')}>
-                            <Link href="#">
-                                <HStack>
-                                    <IconButton
-                                        icon={<FaApple />}
-                                        size="md"
-                                        variant="ghost"
-                                        aria-label="Download on App Store"
-                                    />
-                                    <Text>iOS</Text>
-                                </HStack>
-                            </Link>
-                            <Link href="#">
-                                <HStack>
-                                    <IconButton
-                                        icon={<FaGooglePlay />}
-                                        size="md"
-                                        variant="ghost"
-                                        aria-label="Download on Google Play"
-                                    />
-                                    <Text>Android</Text>
-                                </HStack>
-                            </Link>
-                        </Stack>
-                    </Box>
-                </Flex>
-            </Box>
-            <Box bg={useColorModeValue('gray.100', 'gray.800')}>
-                <Box
-                    px={{ base: 4, md: 8 }}
-                    py={4}
-                    mx="auto"
-                    maxW="7xl"
-                    direction={{ base: 'column', lg: 'row' }}
-                    alignItems={{ base: 'center' }}
-                    justifyContent={{ lg: 'space-between' }}>
-                    <Text color="gray.600" fontSize="md">
-                        © 2022 Large Footer. All rights reserved.
-                    </Text>
-                    <HStack spacing={4} mt={{ base: 4, lg: 0 }}>
-                        <Link href="#">
-                            <FaFacebook />
-                        </Link>
-                        <Link href="#">
-                            <FaTwitter />
-                        </Link>
-                        <Link href="#">
-                            <FaInstagram />
-                        </Link>
-                        <Link href="#">
-                            <FaGithub />
-                        </Link>
-                    </HStack>
-                </Box>
-            </Box>
+                    </Stack>
+                </SimpleGrid>
+            </Container>
         </Box>
     );
 }

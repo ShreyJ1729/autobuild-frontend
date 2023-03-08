@@ -18,7 +18,8 @@ import {
     TagLeftIcon,
     TagLabel,
     VStack,
-    Textarea
+    Textarea,
+    Spinner
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { DESCRIPTION_EXAMPLES } from "./constants";
@@ -27,9 +28,10 @@ interface DescriptionQuestionProps {
     description: string;
     setDescription: (newDescription: string) => void;
     handleDescriptionSubmit: () => void;
+    loading: boolean;
 }
 
-export const DescriptionQuestion = ({ description, setDescription, handleDescriptionSubmit }: DescriptionQuestionProps) => {
+export const DescriptionQuestion = ({ description, setDescription, handleDescriptionSubmit, loading }: DescriptionQuestionProps) => {
 
     const { colorMode } = useColorMode();
 
@@ -38,23 +40,27 @@ export const DescriptionQuestion = ({ description, setDescription, handleDescrip
     }
 
     return (<>
-        <VStack py={5} px={10}>
-            <FormLabel fontSize={"3xl"} >Build me a landing page for...</FormLabel>
-            <FormLabel fontSize={"sm"} >Describe your product or company in 1-2 sentences below. Or you can click one of the examples below. You can always change this later.</FormLabel>
-            <Stack direction={['column', 'row']} spacing={4}>
-                {DESCRIPTION_EXAMPLES.map((example, index) => (
-                    <Tag size="md" key={index} variant='subtle' colorScheme={example.color} _hover={{ cursor: "pointer", opacity: 0.8 }} onClick={() => { handleTagClick(index) }}>
-                        <TagLeftIcon boxSize='12px' as={AddIcon} />
-                        <TagLabel>{example.title}</TagLabel>
-                    </Tag>
-                ))}
-            </Stack>
-            <Flex w="100%" m={2}>
+        <VStack py={5} px={20}>
+            <FormLabel fontSize={"4xl"} mb="20px" >Build me a landing page for...</FormLabel>
+            <FormLabel fontSize={"lg"} >Describe your product or company in 1-2 sentences below. Or you can select one of the examples below.</FormLabel>
+
+            <Box pt={10}>
+                <Stack direction={['column', 'row']} spacing={4} >
+                    {DESCRIPTION_EXAMPLES.map((example, index) => (
+                        <Tag size="md" key={index} variant='subtle' colorScheme={example.color} _hover={{ cursor: "pointer", opacity: 0.8 }} onClick={() => { handleTagClick(index) }}>
+                            <TagLeftIcon boxSize='12px' as={AddIcon} />
+                            <TagLabel>{example.title}</TagLabel>
+                        </Tag>
+                    ))}
+                </Stack>
+            </Box>
+
+            <Flex w="100%" mx={2} my={5}>
                 <Input
                     size="lg"
                     m={2}
                     p={2}
-                    fontWeight="semibold"
+                    fontWeight="light"
                     placeholder="A digital marketing agency"
                     _placeholder={{ color: colorMode === "light" ? "blackAlpha.500" : "whiteAlpha.600" }}
                     value={description}
@@ -65,7 +71,7 @@ export const DescriptionQuestion = ({ description, setDescription, handleDescrip
                         }
                     }}
                 />
-                <Button colorScheme="green" m={3} type="submit" onClick={handleDescriptionSubmit}>Go!</Button>
+                <Button isDisabled={loading} colorScheme="green" m={3} type="submit" onClick={handleDescriptionSubmit}>{loading ? <Spinner /> : <>Go!</>}</Button>
             </Flex>
         </VStack>
     </>)

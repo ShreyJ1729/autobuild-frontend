@@ -41,7 +41,7 @@ export const DESCRIPTION_EXAMPLES: Array<DESCRIPTION_EXAMPLE> = [
   {
     title: "Digital Marketing Agency",
     description:
-      "ClickFuel, a digital marketing agency for small businesses and startups. We do SEO, PPC, social media, and email marketing.",
+      "ClickFuel is a digital marketing agency for small businesses and startups that does SEO, PPC, social media, and email marketing.",
     color: "cyan",
   },
   {

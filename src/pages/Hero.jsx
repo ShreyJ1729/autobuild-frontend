@@ -1,74 +1,33 @@
-import {
-    Box,
-    Flex,
-    Button,
-    Stack,
-    Text,
-    useColorModeValue,
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
 
-} from '@chakra-ui/react';
-
-export default function FullPageHero() {
+const Hero = () => {
     return (
-        <>
-            <Flex
-                minH={'100vh'}
-                direction={'column'}
-                align={'center'}
-                justify={'center'}
-                bgGradient={{
-                    b: useColorModeValue(
-                        'linear(to-tr, purple.700, purple.600)',
-                        'linear(to-tr, purple.300, purple.200)'
-                    ),
-                }}>
-                <Stack spacing={8} align={'center'}>
-                    <Text
-                        fontSize={{ base: '4xl', md: '6xl' }}
-                        color={useColorModeValue('gray.800', 'white')}>
-                        My Awesome App
-                    </Text>
-                    <Text
-                        fontSize={{ base: 'md', lg: 'lg' }}
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                        maxW={{ base: 'xl', lg: '2xl' }}>
-                        A wonderful new app that will change your life forever. Try it now!
-                    </Text>
-                    <Stack direction={'row'} spacing={6}>
-                        <Button
-                            bg={'purple.400'}
-                            rounded={'full'}
-                            color={'white'}
-                            _hover={{ bg: 'purple.500' }}
-                        // TODO: Add onClick function
-                        >
-                            Get started
-                        </Button>
-                        <Button
-                            bg={'gray.300'}
-                            rounded={'full'}
-                            color={'gray.800'}
-                            _hover={{ bg: 'gray.400' }}
-                        // TODO: Add onClick function
-                        >
-                            Learn more
-                        </Button>
-                    </Stack>
-                </Stack>
-                <Box position={'absolute'} bottom={'5%'} width={'full'}>
-                    <Flex
-                        align={'center'}
-                        justify={'center'}
-                        width={'full'}
-                        bg={useColorModeValue('white', 'gray.800')}>
-                        <Text
-                            color={useColorModeValue('gray.700', 'gray.200')}
-                            fontSize={'sm'}>
-                            Made with ❤ by Your Name
-                        </Text>
-                    </Flex>
-                </Box>
-            </Flex>
-        </>
+        <Box
+            bgGradient="linear(to-r, teal.500,green.500)"
+            w="full"
+            h="100vh"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+        >
+            <Box maxW="lg" textAlign="center">
+                <Heading as="h1" size="4xl" fontWeight="bold" color="white">
+                    Welcome to Vercel
+                </Heading>
+                <Text fontSize="xl" mt={6} color="white">
+                    The best platform to deploy your React applications with ease and speed.
+                </Text>
+                <Button
+                    mt={12}
+                    colorScheme="teal"
+                    size="lg"
+                    onClick={() => console.log("Clicked!")}
+                >
+                    Get started
+                </Button>
+            </Box>
+        </Box>
     );
-}
+};
+
+export default Hero;

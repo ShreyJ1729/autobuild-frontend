@@ -29,14 +29,13 @@ import { NAV_ITEMS } from "./constants";
 import { DescriptionQuestion } from "./DescriptionQuestion";
 
 const Home = () => {
-    const { colorMode } = useColorMode();
     const [stepNumber, setStepNumber] = useState<number>(1);
 
     const [description, setDescription] = useState<string>("");
-    // const [keyFeatures, setKeyFeatures] = useState<{ title: string, description: string }[]>([]);
     const [keyFeatures, setKeyFeatures] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const KEY_FEATURE_GEN_URL = "https://shreyj1729--landingpage-autobuild-component-gen.modal.run";
+    const KEY_FEATURE_GEN_URL = "https://shreyj1729--landingpage-autobuild-feature-gen.modal.run/";
 
     const scrollToBottom = () => {
         setTimeout(() => {
@@ -66,13 +65,13 @@ const Home = () => {
                 setKeyFeatures(features);
                 setStepNumber(2);
                 scrollToBottom();
-                // remove loader
+                setLoading(false);
             }).catch((err) => {
                 console.log("Key feature gen error: ", err);
-                // remove loader
+                setLoading(false);
             })
 
-        // begin loader
+        setLoading(true);
     }
 
     const handleFeaturesSubmit = () => {
@@ -94,8 +93,8 @@ const Home = () => {
 
         {/* Main Form */}
         <Box p={4} w="full">
-            <Box mt="15%" p={2}>
-                <DescriptionQuestion description={description} setDescription={setDescription} handleDescriptionSubmit={handleDescriptionSubmit} />
+            <Box mt="12%" p={2}>
+                <DescriptionQuestion description={description} setDescription={setDescription} handleDescriptionSubmit={handleDescriptionSubmit} loading={loading} />
 
                 <Box my={20}></Box>
 
