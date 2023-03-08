@@ -49,6 +49,9 @@ const Home = () => {
       .then((res) => {
         const mermaid_code = res.data["mermaid"];
         setData(mermaid_code);
+      }).catch((err) => {
+        console.log(err);
+        console.log(err.response.data)
       });
 
     setIdea(input);

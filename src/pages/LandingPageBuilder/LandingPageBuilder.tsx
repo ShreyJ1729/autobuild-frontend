@@ -11,58 +11,98 @@ import {
     useColorMode,
     FormControl,
     FormLabel,
+    useColorModeValue,
+    Progress,
+    HStack,
+    Tag,
+    TagLeftIcon,
+    TagLabel,
+    VStack
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import Navbar from "./Navbar";
+import KeyFeaturesQuestion from "./FeaturesQuestion";
+import axios from "axios";
+import { AddIcon } from "@chakra-ui/icons";
+import { DESCRIPTION_EXAMPLES } from "./constants";
+import { NAV_ITEMS } from "./constants";
+import { DescriptionQuestion } from "./DescriptionQuestion";
 
 const Home = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
-    const [description, setDescription] = useState<string>("");
+    const { colorMode } = useColorMode();
+    const [stepNumber, setStepNumber] = useState<number>(1);
 
+    const [description, setDescription] = useState<string>("");
+    // const [keyFeatures, setKeyFeatures] = useState<{ title: string, description: string }[]>([]);
+    const [keyFeatures, setKeyFeatures] = useState<string[]>([]);
+
+    const KEY_FEATURE_GEN_URL = "https://shreyj1729--landingpage-autobuild-component-gen.modal.run";
+
+    const scrollToBottom = () => {
+        setTimeout(() => {
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth',
+            });
+        }, 50);
+    }
 
     const handleDescriptionSubmit = () => {
         console.log("User submitted description:", description)
+
         // Send description to backend
+        axios.get(KEY_FEATURE_GEN_URL, {
+            params: {
+                description: description
+            },
+            data: { description: description }
+        })
+            .then((res) => {
+                console.log("Got response from key feature gen: ", res);
+                const data = res.data.replace(/'/g, '"')
+                console.log("Data: ", data)
+                const features = JSON.parse(data)["features"];
+                console.log("Features: ", features)
+                setKeyFeatures(features);
+                setStepNumber(2);
+                scrollToBottom();
+                // remove loader
+            }).catch((err) => {
+                console.log("Key feature gen error: ", err);
+                // remove loader
+            })
 
-        // show next step (key features, product name, UI framework, color scheme) with pregenerated options
-        // option to regenerate options or manually edit
-        // option to go back to previous step
-        // option to submit
-
-        // show loading screen while waiting for response
-        // move to preview screen where preview is shown and user can edit code on sidebar, live updates
+        // begin loader
     }
 
-    return (<>
-        <Box p={4} >
-            <Flex alignItems="center" justifyContent="space-between">
-                <Heading size="md" >AutoBuild</Heading>
-                <Stack direction="row" alignItems="center" spacing={4}>
-                    <IconButton
-                        aria-label="Toggle dark mode"
-                        icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
-                        onClick={toggleColorMode}
-                    />
-                    <Button colorScheme="blue">Sign in</Button>
-                </Stack>
-            </Flex>
-        </Box>
-        <Box p={4}>
-            <Box mt={8}>
-                <FormLabel>Build me a landing page for...</FormLabel>
-                <Input size="lg"
-                    fontWeight="semibold"
-                    placeholder="your idea goes here"
-                    _placeholder={{ color: colorMode === "light" ? "blackAlpha.700" : "whiteAlpha.700" }}
-                    value={description}
-                    onChange={(e) => { setDescription(e.currentTarget.value) }}
-                    onKeyPress={e => {
-                        if (e.key === 'Enter') {
-                            handleDescriptionSubmit();
-                        }
-                    }}
-                />
+    const handleFeaturesSubmit = () => {
+        console.log("User submitted features:", keyFeatures)
+        setStepNumber(3);
+        scrollToBottom();
+    }
 
-                <Button colorScheme="blue" mt={4} type="submit" onClick={handleDescriptionSubmit}>Go!</Button>
+    // show next step (key features, product name, UI framework, color scheme) with pregenerated options
+    // option to regenerate options or manually edit
+    // option to go back to previous step
+    // option to submit
+
+    // show loading screen while waiting for response
+    // move to preview screen where preview is shown and user can edit code on sidebar, live updates
+
+    return (<>
+        <Navbar navItems={NAV_ITEMS} stepNumber={stepNumber} />
+
+        {/* Main Form */}
+        <Box p={4} w="full">
+            <Box mt="15%" p={2}>
+                <DescriptionQuestion description={description} setDescription={setDescription} handleDescriptionSubmit={handleDescriptionSubmit} />
+
+                <Box my={20}></Box>
+
+                {(stepNumber > 1) && <KeyFeaturesQuestion keyFeatures={keyFeatures} setKeyFeatures={setKeyFeatures} handleDescriptionSubmit={handleDescriptionSubmit} setStepNumber={setStepNumber} handleFeaturesSubmit={handleFeaturesSubmit} />}
+
+                <Box my={20}></Box>
+
             </Box>
         </Box>
     </>

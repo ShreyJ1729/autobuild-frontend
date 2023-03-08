@@ -7,6 +7,8 @@ import Home from "./pages/Home/Home";
 import LandingPageBuilder from "./pages/LandingPageBuilder/LandingPageBuilder";
 import MermaidGen from "./pages/MermaidGen/MermaidGen";
 import MermaidEdit from "./pages/MermaidEdit/MermaidEdit";
+import Test from "./pages/Test";
+
 import { ColorModeScript } from "@chakra-ui/react";
 
 function App() {
@@ -17,10 +19,11 @@ function App() {
         <ChakraProvider theme={theme}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<LandingPageBuilder />} />
               <Route path="/mermaid" element={<MermaidGen />} />
               <Route path="/mermaid-edit" element={<MermaidEdit />} />
               <Route path="/landing" element={<LandingPageBuilder />} />
+              <Route path="/test" element={<Test />} />
               <Route path="*" element={<div>404</div>} />
             </Routes>
           </BrowserRouter>
