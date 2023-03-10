@@ -27,6 +27,7 @@ import {
 } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import { NavItem } from "./constants"
+import { NAV_ITEMS } from './constants';
 
 interface NavbarProps {
     navItems: Array<NavItem>
@@ -41,7 +42,7 @@ export default function Navbar({ navItems, stepNumber }: NavbarProps) {
     const linkHoverColor = useColorModeValue('black', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.900');
 
-    const NUM_STEPS = 3;
+    const NUM_STEPS = 4;
 
     return (
         <>
@@ -131,7 +132,7 @@ export default function Navbar({ navItems, stepNumber }: NavbarProps) {
                     </Button> */}
                 </Stack>
             </Flex>
-            <Progress value={100 * (stepNumber - 1) / NUM_STEPS} size='xs' colorScheme='pink' position="fixed" top="60px" w="100%"
+            <Progress value={100 * stepNumber / NUM_STEPS} size='xs' colorScheme='pink' position="fixed" top="60px" w="100%"
                 sx={{
                     "& > div:first-child": {
                         transitionProperty: "width",

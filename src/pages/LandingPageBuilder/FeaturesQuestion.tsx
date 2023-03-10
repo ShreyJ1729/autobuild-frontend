@@ -14,6 +14,7 @@ import {
     Input,
     List,
     ListItem,
+    Spinner,
     Text,
     Textarea,
     useEditableControls,
@@ -27,15 +28,15 @@ interface KeyFeaturesQuestionProps {
     handleDescriptionSubmit: () => void;
     handleFeaturesSubmit: () => void;
     setStepNumber: (newStepNumber: number) => void;
+    loading2: boolean;
 }
 
 // TODO build option to "lock" a feature so that it doesn't get deleted on regeneration
 
-const KeyFeaturesQuestion = ({ keyFeatures, setKeyFeatures, handleDescriptionSubmit, handleFeaturesSubmit, setStepNumber }: KeyFeaturesQuestionProps) => {
+const KeyFeaturesQuestion = ({ keyFeatures, setKeyFeatures, handleDescriptionSubmit, handleFeaturesSubmit, setStepNumber, loading2 }: KeyFeaturesQuestionProps) => {
     const handleRegenerateClick = () => {
         console.log("Regenerating key features...")
         handleDescriptionSubmit();
-        setStepNumber(2);
     };
 
     const handleFeatureChange = (index: number, newFeature: string) => {
@@ -78,10 +79,10 @@ const KeyFeaturesQuestion = ({ keyFeatures, setKeyFeatures, handleDescriptionSub
                 ))}
             </List>
             <Button mt={3} mr={1} p={4} onClick={handleRegenerateClick}>
-                Regenerate
+                Regenerate Features
             </Button>
             <Button colorScheme="green" mt={3} ml={1} p={4} onClick={handleFeaturesSubmit}>
-                Next Step
+                {loading2 ? <Spinner /> : <>Send for Code-Gen</>}
             </Button>
         </Box >
     );

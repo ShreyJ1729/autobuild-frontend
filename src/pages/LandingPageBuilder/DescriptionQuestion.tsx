@@ -19,9 +19,11 @@ import {
     TagLabel,
     VStack,
     Textarea,
-    Spinner
+    Spinner,
+    Link,
+    Text
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import { DESCRIPTION_EXAMPLES } from "./constants";
 
 interface DescriptionQuestionProps {
@@ -31,7 +33,7 @@ interface DescriptionQuestionProps {
     loading: boolean;
 }
 
-export const DescriptionQuestion = ({ description, setDescription, handleDescriptionSubmit, loading }: DescriptionQuestionProps) => {
+const DescriptionQuestion = ({ description, setDescription, handleDescriptionSubmit, loading }: DescriptionQuestionProps) => {
 
     const { colorMode } = useColorMode();
 
@@ -41,8 +43,8 @@ export const DescriptionQuestion = ({ description, setDescription, handleDescrip
 
     return (<>
         <VStack py={5} px={20}>
-            <FormLabel fontSize={"4xl"} mb="20px" >Build me a landing page for...</FormLabel>
-            <FormLabel fontSize={"lg"} >Describe your product or company in 1-2 sentences below. Or you can select one of the examples below.</FormLabel>
+            <FormLabel fontSize={"4xl"} mb="20px" >Build a landing page with zero effort</FormLabel>
+            <FormLabel fontSize={"lg"} >Describe your product or company in 1-2 sentences below. Or you can select one of the templates below.</FormLabel>
 
             <Box pt={10}>
                 <Stack direction={['column', 'row']} spacing={4} >
@@ -73,6 +75,20 @@ export const DescriptionQuestion = ({ description, setDescription, handleDescrip
                 />
                 <Button isDisabled={loading} colorScheme="green" m={3} type="submit" onClick={handleDescriptionSubmit}>{loading ? <Spinner /> : <>Go!</>}</Button>
             </Flex>
+            <Text>
+                See some examples of landing pages built with this tool: <Box>
+
+                    <Flex direction={['column', 'row']}>
+                        <Spacer />
+                        <Link href='/examples/clickfuel' isExternal mx="auto" my="2" color="cyan">ClickFuel <ExternalLinkIcon mx='2px' /></Link>
+                        <Spacer />
+                        <Link href='/examples/surfaclub' isExternal mx="auto" my="2" color="orange.400">SurfaClub <ExternalLinkIcon mx='2px' /></Link>
+                        <Spacer />
+                    </Flex>
+                </Box>
+            </Text>
         </VStack>
     </>)
 }
+
+export default DescriptionQuestion;
